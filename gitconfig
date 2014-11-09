@@ -1,5 +1,8 @@
 [init]
   templatedir = ~/.git_template
+[user]
+	name = "Xiaofeng Yuan"
+	email = xfyuan@thoughtworks.com
 [push]
   default = current
 [color]
@@ -7,25 +10,35 @@
 [alias]
   aa = add --all
   ap = add --patch
+  br = branch
   ca = commit --amend
   ci = commit -v
   co = checkout
+  cb = checkout -b
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   co-pr = !sh -c 'git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1' -
   create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
   ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
   delete-branch = !sh -c 'git push origin :refs/heads/$1 && git branch -D $1' -
   merge-branch = !git checkout master && git merge @{-1}
   pr = !gh pull-request
-  st = status
+  ss = status
   up = !git fetch origin && git rebase origin/master
 [core]
   excludesfile = ~/.gitignore
   autocrlf = input
 [merge]
   ff = only
+  tool = vimdiff
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
 [commit]
   template = ~/.gitmessage
 [fetch]
   prune = true
 [include]
   path = ~/.gitconfig.local
+[credential]
+	helper = osxkeychain

@@ -1,0 +1,89 @@
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="robbyrussell"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(brew tmux tmuxinator git git-extras git-flow composer)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+# export MANPATH="/usr/local/man:$MANPATH"
+
+path=(
+    bin
+    vendor/bin
+    $HOME/.bin
+    $HOME/.composer/vendor/bin
+    $path
+)
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# aliases
+alias viv="vim ~/.vimrc"
+alias viz="vim ~/.zshrc"
+alias cl="clear"
+
+alias tmux="TERM=screen-256color-bce tmux"
+alias tk="tmux kill-session"
+
+# dev env
+alias vm="cd ~/work/homestead"
+alias vmtw="cd ~/work/tw-projects/homestead"
+alias hubup="git push -u origin master"
+# alias heroup="git push heroku master && heroku run rake db:migrate"
+
+# alias devup="mysql.server start && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k start"
+# alias devdown="mysql.server stop && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k stop"
+# alias pgup="postgres -D /usr/local/var/postgres"
+
+alias art="php artisan"
+alias art:s="art serve"
+alias g:m="php artisan generate:model"
+alias g:c="php artisan generate:controller"
+alias g:v="php artisan generate:view"
+alias g:s="php artisan generate:seed"
+alias g:p="php artisan generate:pivot"
+alias g:r="php artisan generate:resource"
+alias g:mig="php artisan generate:migration"
+alias g:sf="php artisan generate:scaffold"
+
+alias cc="vendor/bin/codecept"
+alias cs="vendor/bin/codecept run --steps"
+alias ccpb="vendor/bin/codecept run --env phpbrowser"
+alias ccpj="vendor/bin/codecept run --env phantomjs"
+alias uu="vendor/bin/phpunit"
+
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - zsh --no-rehash)"
