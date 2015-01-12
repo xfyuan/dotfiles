@@ -44,7 +44,7 @@ endif
 " r - insert comment leader
 " mM - useful for Chinese characters, q - gq
 " j - remove comment leader when joining lines
-autocmd! FileType * setlocal formatoptions-=o
+autocmd! FileType * setlocal formatoptions-=t
 
 " Softtabs, 4 spaces
 set tabstop=4
@@ -61,7 +61,7 @@ set tags=./tags
 " Color scheme
 set background=dark
 colorscheme hybrid
-set guifont=Menlo\ Regular:h14
+set guifont=Menlo\ Regular:h13
 
 " Make it obvious where 80 characters is
 set textwidth=80
@@ -124,7 +124,7 @@ set foldmethod=marker
 " Function keys {{{
     " F1
     " F2    Insert date and time
-    inoremap <F2> <C-R>=strftime("%d/%b/%Y %I:%M %p")<CR>
+    inoremap <F2> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
     " F3    Toggle NERDTree
     " F4
     " F5    Toggle Undotree
@@ -256,16 +256,16 @@ set foldmethod=marker
     " <M>       Move cursor to centre of screen
     " <,>       Leader
     " [<]       Left Indent
-    vnoremap < <gv
+    " vnoremap < <gv
     " <.>       Repeat last command
     " [>]       Right Indent
-    vnoremap > >gv
+    " vnoremap > >gv
     " </>       Search
-    nnoremap / /\v
-    vnoremap / /\v
+    " nnoremap / /\v
+    " vnoremap / /\v
     " <?>       Search backwards
-    nnoremap ? ?\v
-    vnoremap ? ?\v
+    " nnoremap ? ?\v
+    " vnoremap ? ?\v
     " <space>   Enter <space> used as Leader
     nnoremap <leader><leader> <c-^>
     " <Enter>   Insert New Line without going into insert mode
@@ -337,7 +337,7 @@ set foldmethod=marker
     " <leader>z
     " <leader>x
     " <leader>c
-    nnoremap <leader>cc :!vendor/bin/codecept run --env phpbrowser %<CR>
+    nnoremap <leader>cc :!vendor/bin/codecept run %<CR>
     " <leader>v Select the just pasted text
     nnoremap <leader>v V`]
     " <leader>b
@@ -369,7 +369,7 @@ set foldmethod=marker
     " <C-y> Emmet Expand
     " <C-u> Page up
     " <C-u> Switch word case
-    inoremap <C-u> <esc>mzg~iw`za
+    " inoremap <C-u> <esc>mzg~iw`za
     " <C-i>
     " <C-o>
     " <C-p>
@@ -397,8 +397,8 @@ set foldmethod=marker
 " }}}
 
 " <C-*> (Insert Mode) {{{
-    inoremap <expr> <C-j> pumvisible() ? "\<C-e>\<Down>" : "\<Down>"
-    inoremap <expr> <C-k> pumvisible() ? "\<C-e>\<Up>" : "\<Up>"
+    " inoremap <expr> <C-j> pumvisible() ? "\<C-e>\<Down>" : "\<Down>"
+    " inoremap <expr> <C-k> pumvisible() ? "\<C-e>\<Up>" : "\<Up>"
     inoremap <C-H>  <S-Left>
     inoremap <C-L>  <S-Right>
     inoremap <C-B>  <Left>
@@ -481,11 +481,21 @@ function! s:CoffeeDef()
 endfunction
 " }}}
 
+" Javascript Mappings {{{
+autocmd! FileType javascript :call s:JavascriptDef()
+function! s:JavascriptDef()
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+endfunction
+" }}}
+
 " Html/Xml Mappings {{{
 autocmd! FileType xhtml,html,slim,jade,xml,yaml :call s:WebDef()
 function! s:WebDef()
     setlocal shiftwidth=2
     setlocal tabstop=2
+    setlocal foldmethod=indent
+    setlocal foldlevel=1
 
     " Surround % to {{
     let b:surround_37 = "{{ \r }}"

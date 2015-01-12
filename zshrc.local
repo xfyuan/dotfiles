@@ -11,7 +11,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew tmux tmuxinator git git-extras git-flow composer)
+plugins=(brew colored-man tmux tmuxinator git github git-extras git-flow composer)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -56,11 +56,10 @@ alias cl="clear"
 
 alias tmux="TERM=screen-256color-bce tmux"
 alias tk="tmux kill-session"
+alias hd="homestead"
 
 # dev env
-alias vm="cd ~/work/homestead"
 alias vmtw="cd ~/work/tw-projects/homestead"
-alias hubup="git push -u origin master"
 # alias heroup="git push heroku master && heroku run rake db:migrate"
 
 # alias devup="mysql.server start && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k start"

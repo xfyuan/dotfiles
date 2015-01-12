@@ -11,7 +11,20 @@ NeoBundleFetch 'Shougo/neobundle.vim'                   " NeoBundle, required
 " Colorschemes {{{
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'croaky/vim-colors-github'
+" NeoBundle 'nathanaelkane/vim-indent-guides'
+"     let g:indent_guides_enable_on_vim_startup = 1
+"     let g:indent_guides_start_level=2
+"     let g:indent_guides_guide_size=1
+"     let g:indent_guides_auto_colors = 0
+"     autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=238
+"     autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=239
+NeoBundle 'Yggdroot/indentLine'
+    let g:indentLine_char = '┊'
+    let g:indentLine_color_term = 239
+    let g:indentLine_fileTypeExclude = ['markdown', 'text', 'json']
 " }}}
+
+NeoBundle 'editorconfig/editorconfig-vim'
 
 " switch words {{{
 NeoBundleLazy 'AndrewRadev/switch.vim', {
@@ -127,7 +140,7 @@ NeoBundleLazy 'junegunn/vim-easy-align', {
     " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
     xmap <CR>      <Plug>(EasyAlign)
     " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
-    nmap <leader>a <Plug>(EasyAlign)
+    " nmap <leader>a <Plug>(EasyAlign)
 " }}}
 
 " open dash documentation {{{
@@ -160,7 +173,7 @@ NeoBundleLazy 'Lokaltog/vim-easymotion', {
             \   'autoload' : { 'mappings' : ['<Plug>(easymotion-'] },
             \ }
     " easymotion prefix
-    map s      <Plug>(easymotion-prefix)
+    map ,      <Plug>(easymotion-prefix)
     " not case censitive
     let g:EasyMotion_smartcase = 1
 " }}}
@@ -215,6 +228,11 @@ NeoBundle 'jiangmiao/auto-pairs'
 
 " Syntastic {{{
 NeoBundle 'scrooloose/syntastic'
+    " let g:syntastic_check_on_open=1
+    " let g:syntastic_enable_signs=1
+    let g:syntastic_enable_highlighting = 0
+    let g:syntastic_phpcs_conf = "--tab-width=4 --standard=PSR2"
+
     " manual syntastic check
     nnoremap <silent> <F7> :SyntasticCheck<CR>
     " fancy symbols
@@ -223,9 +241,9 @@ NeoBundle 'scrooloose/syntastic'
     let g:syntastic_style_error_symbol = '❄'
     let g:syntastic_style_warning_symbol = '❖'
     " error window will be automatically closed
-    let g:syntastic_auto_loc_list = 1
+    " let g:syntastic_auto_loc_list = 1
     " populate syntastic errors in location list
-    let g:syntastic_always_populate_loc_list = 1
+    " let g:syntastic_always_populate_loc_list = 1
     " height of the location lists that syntastic opens
     let g:syntastic_loc_list_height = 5
     " automatic syntax checking
@@ -305,15 +323,15 @@ NeoBundle 'Shougo/unite.vim'
                 \ ['matcher_fuzzy', 'matcher_hide_hidden_files'])
 
             " ignore_patterns
-            call unite#custom#source(
-                \ 'buffer,file,file_rec,file_rec/async,grep',
-                \ 'ignore_pattern',
-                \ join([
-                \   '\.git/', '\.gitkeep', '\.keep', '\.hg/', '\.o', '\.DS_Store',
-                \   '_build', '_site', 'dist',
-                \   '\.tmp/', 'tmp', 'log', '*.tar.gz', '*.zip',
-                \   'node_modules', 'bower_components', '\.sass-cache/',
-                \ ], '\|'))
+            " call unite#custom#source(
+            "     \ 'buffer,file,file_rec,file_rec/async,grep',
+            "     \ 'ignore_pattern',
+            "     \ join([
+            "     \   '\.git/', '\.gitkeep', '\.keep', '\.hg/', '\.o', '\.DS_Store',
+            "     \   '_build', '_site', 'dist',
+            "     \   '\.tmp/', 'tmp', 'log', '*.tar.gz', '*.zip',
+            "     \   'node_modules', 'bower_components', '\.sass-cache/',
+            "     \ ], '\|'))
 
             " sorter_default
             call unite#filters#sorter_default#use(['sorter_rank'])
@@ -330,10 +348,11 @@ NeoBundle 'Shougo/unite.vim'
     nnoremap <silent> <leader>f :<C-u>Unite -buffer-name=files file<CR>
     " Buffer switching
     nnoremap <silent> <leader>b :<C-u>Unite -buffer-name=buffers -quick-match buffer<CR>
+	nnoremap <silent> <leader>c :<C-u>UniteWithCurrentDir -buffer-name=files buffer bookmark file<CR>
     " Tab switching
     " nnoremap <silent> <leader>u :<C-u>Unite -buffer-name=tabs -quick-match tab<CR>
     " Reuses the last unite buffer used
-    nnoremap <silent> <leader>r :<C-u>UniteResume<CR>
+    " nnoremap <silent> <leader>r :<C-u>UniteResume<CR>
 
     " Enabled to track yank history
     let g:unite_source_history_yank_enable = 1
@@ -408,7 +427,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim', {
         \   'depends': ['Shougo/unite.vim'],
         \ }
-    nnoremap <leader>m :<C-u>Unite -buffer-name=mru file_mru<cr>
+    nnoremap <leader>r :<C-u>Unite -buffer-name=mru file_mru<cr>
 NeoBundleLazy 'Shougo/unite-outline', {
             \   'depends': ['Shougo/unite.vim'],
             \   'autoload': {'unite_sources': 'outline'}
@@ -425,8 +444,8 @@ NeoBundle 'Shougo/neocomplete.vim'
     let g:neocomplete#enable_fuzzy_completion = 1
 
     let g:neocomplete#max_list = 30
-    let g:neocomplete#auto_completion_start_length = 1
-    let g:neocomplete#manual_completion_start_length = 1
+    let g:neocomplete#auto_completion_start_length = 3
+    let g:neocomplete#manual_completion_start_length = 3
     let g:neocomplete#sources#buffer#disabled_pattern = '\.log\|\.log\.\|\.jax'
     let g:neocomplete#lock_buffer_name_pattern = '\.log\|\.log\.\|.*quickrun.*\|.jax'
 
@@ -497,33 +516,34 @@ NeoBundleLazy 'rhysd/neco-ruby-keyword-args', {
             \ }
 " }}}
 
-NeoBundleLazy 'rhysd/accelerated-jk', {
-            \   'autoload' : { 'mappings' : ['<Plug>(accelerated_'] }
-            \ }
-    nmap j <Plug>(accelerated_jk_gj)
-    nmap k <Plug>(accelerated_jk_gk)
+" NeoBundleLazy 'rhysd/accelerated-jk', {
+"             \   'autoload' : { 'mappings' : ['<Plug>(accelerated_'] }
+"             \ }
+"     nmap j <Plug>(accelerated_jk_gj)
+"     nmap k <Plug>(accelerated_jk_gk)
 
 " NeoSnippet {{{
 NeoBundle 'Shougo/neosnippet.vim'
     " Default expand with word boundary
-    let g:neosnippet#expand_word_boundary = 1
+    " let g:neosnippet#expand_word_boundary = 1
     " Disables standart snippets, use vim-snippets bundle instead
-    let g:neosnippet#disable_runtime_snippets = { '_' : 1 }
+    " let g:neosnippet#disable_runtime_snippets = { '_' : 1 }
     " Enable snipMate compatibility feature.
-    let g:neosnippet#enable_snipmate_compatibility = 1
+    " let g:neosnippet#enable_snipmate_compatibility = 1
     " Tell Neosnippet about the other snippets
-    let g:neosnippet#snippets_directory = '~/.vim/bundle/vim-snippets/snippets'
+    " let g:neosnippet#snippets_directory = '~/.vim/bundle/vim-snippets/snippets'
     " Remove snippet markers after save
     autocmd! BufWrite * NeoSnippetClearMarkers
 
     " Plugin key-mappings
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    xmap <C-k>     <Plug>(neosnippet_expand_target)
+    imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-j>     <Plug>(neosnippet_expand_or_jump)
+    xmap <C-j>     <Plug>(neosnippet_expand_target)
 " }}}
 
 " snippets and dicts {{{
-NeoBundle 'honza/vim-snippets'
+" NeoBundle 'honza/vim-snippets'
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'zhuochun/vim-dicts'
 " }}}
 
@@ -629,10 +649,6 @@ NeoBundleLazy 'terryma/vim-expand-region', {
 NeoBundle 'jeffkreeftmeijer/vim-numbertoggle'
     let g:NumberToggleTrigger="@"
 
-NeoBundle 'Yggdroot/indentLine'
-    let g:indentLine_char = '┊'
-    let g:indentLine_fileTypeExclude = ['markdown', 'text']
-
 " Text Objects {{{
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-line'               " al | il
@@ -682,7 +698,7 @@ NeoBundle 'wavded/vim-stylus'
 " }}}
 
 " JavaScript {{{
-NeoBundle 'elzr/vim-json'
+" NeoBundle 'elzr/vim-json'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'moll/vim-node'
 NeoBundle 'pangloss/vim-javascript'
