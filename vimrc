@@ -302,7 +302,8 @@ set foldmethod=marker
         nnoremap <buffer> ^ g^
     endfunction
     " <leader>e
-    " <leader>r
+    nnoremap <leader>b :CtrlPBuffer<CR>
+    nnoremap <leader>r :CtrlPMRU<CR>
     " <leader>t
     " <leader>y Yank content in OS's clipboard
     vnoremap <leader>y "*y
@@ -422,6 +423,7 @@ set foldmethod=marker
     cnoremap <C-Y> <C-r>*
 " }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Additional Settings {{{
@@ -578,6 +580,3 @@ if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
 endif
 
-" NeoBundleCheck {{{
-NeoBundleCheck
-" }}}
