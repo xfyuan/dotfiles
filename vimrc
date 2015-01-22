@@ -19,6 +19,7 @@ set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
+set iskeyword+=.,$,%
 
 set undodir=~/.vim/tmp/undo//     " undo files
 set undofile
@@ -304,7 +305,8 @@ set foldmethod=marker
     " <leader>e
     nnoremap <leader>b :CtrlPBuffer<CR>
     nnoremap <leader>r :CtrlPMRU<CR>
-    " <leader>t
+    " <leader>t Show yank list
+    nnoremap <leader>t :YRShow<CR>
     " <leader>y Yank content in OS's clipboard
     vnoremap <leader>y "*y
     " <leader>u

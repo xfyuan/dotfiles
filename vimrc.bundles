@@ -11,12 +11,12 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " Appearance {{{
-Plug 'junegunn/seoul256.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'croaky/vim-colors-github'
+" Plug 'croaky/vim-colors-github'
+Plug 'saaguero/vim-github-colorscheme'
 Plug 'junegunn/indentLine'
-  let g:indentLine_char = '┊'
-  let g:indentLine_color_term = 239
+    let g:indentLine_char = '┊'
+    let g:indentLine_color_term = 239
 
 Plug 'bling/vim-airline'
     let g:airline_theme='light'
@@ -77,13 +77,30 @@ Plug 'bling/vim-airline'
     " let g:airline#extensions#tabline#right_alt_sep = ''
 " }}}
 
+" Core {{{
 Plug 'ctrlpvim/ctrlp.vim'
+    " let g:ctrlp_match_window = 'bottom,order:btt,min:20,max:20,results:20'
+    let g:ctrlp_working_path_mode = 0
+    let g:ctrlp_custom_ignore = {
+        \ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
+        \ 'file': '\.pyc$\|\.pyo$',
+        \ }
+    let g:ctrlp_open_multiple_files = '1jr'
+    let g:ctrlp_max_files = 0
+    let g:ctrlp_lazy_update = 50
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+Plug 'felikz/ctrlp-py-matcher'
 
-Plug 'bling/vim-bufferline'
+" Plug 'bling/vim-bufferline'
 Plug 'bufkill.vim'
 Plug 'matchit.zip'
 Plug 'tComment'
 Plug 'jiangmiao/auto-pairs'
+
+Plug 'vim-scripts/YankRing.vim'
+    let g:yankring_history_dir = '~/.vim/tmp'
+    let g:yankring_replace_n_pkey = '<leader>['
+    let g:yankring_replace_n_nkey = '<leader>]'
 
 Plug 'kristijanhusak/vim-multiple-cursors'
     " Disable NeoComplete once start selecting multiple cursors
@@ -109,31 +126,6 @@ Plug 'Lokaltog/vim-easymotion'
     " not case censitive
     let g:EasyMotion_smartcase = 1
 
-Plug 'scrooloose/syntastic'
-    " let g:syntastic_check_on_open=1
-    " let g:syntastic_enable_signs=1
-    let g:syntastic_enable_highlighting = 0
-    let g:syntastic_phpcs_conf = "--tab-width=4 --standard=PSR2"
-
-    " manual syntastic check
-    nnoremap <silent> <F7> :SyntasticCheck<CR>
-    " fancy symbols
-    let g:syntastic_error_symbol = '✗'
-    let g:syntastic_warning_symbol = '‽'
-    let g:syntastic_style_error_symbol = '❄'
-    let g:syntastic_style_warning_symbol = '❖'
-    " error window will be automatically closed
-    " let g:syntastic_auto_loc_list = 1
-    " populate syntastic errors in location list
-    " let g:syntastic_always_populate_loc_list = 1
-    " height of the location lists that syntastic opens
-    let g:syntastic_loc_list_height = 5
-    " automatic syntax checking
-    let g:syntastic_mode_map = {
-        \ 'mode': 'active',
-        \ 'active_filetypes': ['php', 'javascript', 'ruby', 'coffee'],
-        \ 'passive_filetypes': ['html', 'css', 'scss'] }
-
 Plug 'justinmk/vim-gtfo'
 Plug 'scrooloose/nerdtree'
     " Make it colourful and pretty
@@ -158,6 +150,44 @@ Plug 'jistr/vim-nerdtree-tabs'
     map <F3> <Plug>NERDTreeTabsToggle<CR>
     " Do not open NERDTree on startup
     let g:nerdtree_tabs_open_on_gui_startup = 0
+
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+    let g:NumberToggleTrigger="@"
+
+" Tmux
+Plug 'tpope/vim-tbone'
+Plug 'tpope/vim-dispatch'
+
+" }}}
+
+" Programming {{{
+Plug 'scrooloose/syntastic'
+    " let g:syntastic_check_on_open=1
+    " let g:syntastic_enable_signs=1
+    let g:syntastic_enable_highlighting = 0
+    let g:syntastic_phpcs_conf = "--tab-width=4 --standard=PSR2"
+
+    " manual syntastic check
+    nnoremap <silent> <F7> :SyntasticCheck<CR>
+    " fancy symbols
+    let g:syntastic_error_symbol = '✗'
+    let g:syntastic_warning_symbol = '‽'
+    let g:syntastic_style_error_symbol = '❄'
+    let g:syntastic_style_warning_symbol = '❖'
+    " error window will be automatically closed
+    " let g:syntastic_auto_loc_list = 1
+    " populate syntastic errors in location list
+    " let g:syntastic_always_populate_loc_list = 1
+    " height of the location lists that syntastic opens
+    let g:syntastic_loc_list_height = 5
+    " automatic syntax checking
+    let g:syntastic_mode_map = {
+        \ 'mode': 'active',
+        \ 'active_filetypes': ['php', 'javascript', 'ruby', 'coffee'],
+        \ 'passive_filetypes': ['html', 'css', 'scss'] }
 
 Plug 'zhuochun/vim-dicts'
 Plug 'Shougo/neosnippet-snippets'
@@ -235,16 +265,7 @@ Plug 'Shougo/neocomplete.vim'
     inoremap <expr><Space> pumvisible() ?
                 \ neocomplete#close_popup()."\<Space>" : "\<Space>"
 
-
-Plug 'tommcdo/vim-exchange'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
-    let g:NumberToggleTrigger="@"
-
-" Tmux
-Plug 'tpope/vim-tbone'
-Plug 'tpope/vim-dispatch'
+" }}}
 
 " Text Objects {{{
 Plug 'kana/vim-textobj-user'
@@ -332,8 +353,9 @@ Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 " }}}
 
 " Markdown {{{
-Plug 'gabrielelana/vim-markdown'
-    let g:markdown_enable_mappings = 0
+Plug 'plasticboy/vim-markdown'
+" Plug 'gabrielelana/vim-markdown'
+"     let g:markdown_enable_mappings = 0
 Plug 'junegunn/goyo.vim',      { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 " }}}
