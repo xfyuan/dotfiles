@@ -31,7 +31,7 @@ This command will create symlinks for config files in your home directory.
 Setting the `RCRC` environment variable tells `rcup` to use standard
 configuration options:
 
-* Exclude the `README.md`, `LICENSE`, and `Brewfile` files, which are part of
+* Exclude the `README.md` and `LICENSE` files, which are part of
   the `dotfiles` repository but do not need to be symlinked in.
 * Give precedence to personal overrides which by default are placed in
   `~/dotfiles-local`
@@ -46,6 +46,7 @@ Make your own customizations
 Put your customizations in dotfiles appended with `.local`:
 
 * `~/.aliases.local`
+* `~/.git_template.local/*`
 * `~/.gitconfig.local`
 * `~/.gvimrc.local`
 * `~/.psqlrc.local` (we supply a blank `.psqlrc.local` to prevent `psql` from
@@ -78,6 +79,9 @@ Your `~/.zshenv.local` might look like this:
     if which pyenv &>/dev/null ; then
       eval "$(pyenv init -)"
     fi
+
+To extend your `git` hooks, create executable scripts in
+`~/.git_template.local/hooks/*` files.
 
 Your `~/.zshrc.local` might look like this:
 
@@ -171,7 +175,8 @@ configuration:
 * Adds an `up` alias to fetch and rebase `origin/master` into the feature
   branch. Use `git up -i` for interactive rebases.
 * Adds `post-{checkout,commit,merge}` hooks to re-index your ctags.
-  To extend your `git` hooks, create executable scripts in `~/.git_template.local/hooks/post-{commit,checkout,merge}`
+* Adds `pre-commit` and `prepare-commit-msg` stubs that delegate to your local
+  config.
 
 [Ruby](https://www.ruby-lang.org/en/) configuration:
 

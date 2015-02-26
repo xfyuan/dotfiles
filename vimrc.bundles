@@ -82,7 +82,7 @@ Plug 'ctrlpvim/ctrlp.vim'
     " let g:ctrlp_match_window = 'bottom,order:btt,min:20,max:20,results:20'
     let g:ctrlp_working_path_mode = 0
     let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\v[\/](\.git|\.hg|\.svn)$',
+        \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$',
         \ 'file': '\.pyc$\|\.pyo$',
         \ }
     let g:ctrlp_open_multiple_files = '1jr'
@@ -154,8 +154,9 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
-    let g:NumberToggleTrigger="@"
+    let g:NumberToggleTrigger="#"
 
 " Tmux
 Plug 'tpope/vim-tbone'
@@ -315,8 +316,7 @@ Plug 'othree/javascript-libraries-syntax.vim'
 " PHP/Laravel {{{
 Plug 'StanAngeloff/php.vim'
 Plug 'xsbeats/vim-blade', { 'for': 'blade' }
-Plug 'markwu/vim-laravel4-snippets'
-" Plug 'adoy/vim-php-refactoring-toolbox'
+Plug 'adoy/vim-php-refactoring-toolbox'
 " }}}
 
 " Ruby/Rails {{{

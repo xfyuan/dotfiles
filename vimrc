@@ -133,10 +133,19 @@ set foldmethod=marker
     set pastetoggle=<F6>
     " F7    Tigger Syntastic manual check
     " F8
+    nnoremap <silent> <F8> :call DiffToggle()<CR>
     " F9    Toggle iTerm 2
     " F10   Toggle Tagbar
     " F11   Toggle Goyo
     " F12   Toggle ZoomWin
+
+    function! DiffToggle()
+        if &diff
+            windo diffoff
+        else
+            windo diffthis
+        endif
+    :endfunction
 " }}}
 
 " Special keys {{{

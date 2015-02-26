@@ -53,6 +53,7 @@ path=(
 alias viv="vim ~/.vimrc"
 alias viz="vim ~/.zshrc"
 alias cl="clear"
+alias nv="nvim"
 
 alias tmux="TERM=screen-256color-bce tmux"
 alias tk="tmux kill-session"
@@ -68,20 +69,13 @@ alias vmtw="cd ~/work/tw-projects/homestead"
 
 alias art="php artisan"
 alias art:s="art serve"
-alias g:m="php artisan generate:model"
-alias g:c="php artisan generate:controller"
-alias g:v="php artisan generate:view"
-alias g:s="php artisan generate:seed"
-alias g:p="php artisan generate:pivot"
-alias g:r="php artisan generate:resource"
-alias g:mig="php artisan generate:migration"
-alias g:sf="php artisan generate:scaffold"
 
 alias cc="vendor/bin/codecept"
-alias cs="vendor/bin/codecept run --steps"
-alias ccpb="vendor/bin/codecept run --env phpbrowser"
-alias ccpj="vendor/bin/codecept run --env phantomjs"
+# alias cs="vendor/bin/codecept run --steps"
+# alias ccpb="vendor/bin/codecept run --env phpbrowser"
+# alias ccpj="vendor/bin/codecept run --env phantomjs"
 alias uu="vendor/bin/phpunit"
+alias spec="vendor/bin/phpspec"
 
 
 export PATH="$HOME/.rbenv/bin:$PATH"
