@@ -58,6 +58,7 @@ set list listchars=tab:»·,trail:⌴,conceal:…,extends:❯,precedes:❮,nbsp:
 
 " set tag location
 set tags=./tags
+set tags+=gems.tags
 
 " Color scheme
 set background=dark
@@ -94,6 +95,12 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 set nofoldenable
 set foldmethod=marker
+
+" Automatically fitting a quickfix window height: min=3, max=40
+au FileType qf call AdjustWindowHeight(3, 40)
+function! AdjustWindowHeight(minheight, maxheight)
+  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Mappings {{{
@@ -186,7 +193,7 @@ set foldmethod=marker
     " <+>       Switch
     " <q>*      Record Macro
     " <Q>       Repeat last recorded Macro
-    nnoremap Q @@
+    " nnoremap Q @@
     " <w>       Word forwards
     " <W>       Word forwards
     " <e>       Forwards to the end of word
@@ -311,11 +318,16 @@ set foldmethod=marker
         nnoremap <buffer> $ g$
         nnoremap <buffer> ^ g^
     endfunction
-    " <leader>e
+    " <leader>e Show yank list
+    nnoremap <leader>e :YRShow<CR>
     nnoremap <leader>b :CtrlPBuffer<CR>
     nnoremap <leader>r :CtrlPMRU<CR>
-    " <leader>t Show yank list
-    nnoremap <leader>t :YRShow<CR>
+    nnoremap <leader>g :CtrlPTag<CR>
+    " <leader>t vim-rspec mappings
+    nnoremap <leader>t :call RunCurrentSpecFile()<CR>
+    nnoremap <leader>s :call RunNearestSpec()<CR>
+    nnoremap <leader>l :call RunLastSpec()<CR>
+    nnoremap <Leader>a :call RunAllSpecs()<CR>
     " <leader>y Yank content in OS's clipboard
     vnoremap <leader>y "*y
     " <leader>u
@@ -337,6 +349,9 @@ set foldmethod=marker
     " <leader>D Close buffer
     nnoremap <leader>D :bd<CR>
     " <leader>f Format file
+    nnoremap <leader>fj :%!js-beautify -s=2 -q -B -f -<CR>
+    nnoremap <leader>fs :%!css-beautify -s=2 -q -L -N -f -<CR>
+    nnoremap <leader>ff :%!html-beautify -s=2 -q -f -<CR>
     " <leader>F Format file
     nnoremap <leader>F gg=G''
     " <leader>g
@@ -349,7 +364,10 @@ set foldmethod=marker
     " <leader>z
     " <leader>x
     " <leader>c
-    nnoremap <leader>cc :!vendor/bin/codecept run %<CR>
+    " Index ctags from any project, including those outside Rails
+    nnoremap <leader>ct :!ctags -R --languages=ruby,coffee,less,sass --exclude=.git --exclude=log --exclude=tmp .<CR>
+    nnoremap <leader>cg :!ctags -R --languages=ruby -f gems.tags  $(bundle list --paths)<CR>
+
     " <leader>v Select the just pasted text
     nnoremap <leader>v V`]
     " <leader>b
@@ -411,27 +429,28 @@ set foldmethod=marker
 " <C-*> (Insert Mode) {{{
     " inoremap <expr> <C-j> pumvisible() ? "\<C-e>\<Down>" : "\<Down>"
     " inoremap <expr> <C-k> pumvisible() ? "\<C-e>\<Up>" : "\<Up>"
-    inoremap <C-H>  <S-Left>
-    inoremap <C-L>  <S-Right>
-    inoremap <C-B>  <Left>
-    inoremap <C-F>  <Right>
+    " inoremap <C-H>  <S-Left>
+    " inoremap <C-L>  <S-Right>
+    " inoremap <C-B>  <Left>
+    " inoremap <C-F>  <Right>
     inoremap <C-A>  <C-O>^
     inoremap <C-E>  <End>
-    inoremap <C-D>  <C-R>=AutoPairsDelete()<CR>
-    inoremap <C-BS> <C-W>
-    inoremap <D-BS> <S-Right><C-W>
+    " inoremap <C-D>  <C-R>=AutoPairsDelete()<CR>
+    " inoremap <C-BS> <C-W>
+    " inoremap <D-BS> <S-Right><C-W>
 " }}}
 
 " <C-*> (Command Mode) {{{
     cnoremap <C-A> <Home>
     cnoremap <C-E> <End>
-    cnoremap <C-F> <Right>
-    cnoremap <C-B> <Left>
-    cnoremap <C-N> <Down>
-    cnoremap <C-P> <Up>
+    " cnoremap <C-F> <Right>
+    " cnoremap <C-B> <Left>
+    " cnoremap <C-N> <Down>
+    " cnoremap <C-P> <Up>
     cnoremap <C-K> <C-\>e getcmdpos() == 1 ? '' : getcmdline()[:getcmdpos()-2]<CR>
-    cnoremap <C-D> <Del>
+    " cnoremap <C-D> <Del>
     cnoremap <C-Y> <C-r>*
+    cnoremap %% <C-R>=expand('%:h').'/'<cr>
 " }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -444,8 +463,8 @@ set foldmethod=marker
 autocmd! BufWritePost .vimrc source $MYVIMRC
 
 " Quick edit _vimrc template
-noremap <leader>0 :tabe $MYVIMRC<CR>
-noremap <leader>) :tabe $MYGVIMRC<CR>
+" noremap <leader>0 :tabe $MYVIMRC<CR>
+" noremap <leader>) :tabe $MYGVIMRC<CR>
 " }}}
 
 " When editing a file, always jump to the last known cursor position.

@@ -14,14 +14,17 @@ call plug#begin('~/.vim/bundle')
 Plug 'w0ng/vim-hybrid'
 " Plug 'croaky/vim-colors-github'
 Plug 'saaguero/vim-github-colorscheme'
+Plug 'trusktr/seti.vim'
+
 Plug 'junegunn/indentLine'
     let g:indentLine_char = '┊'
     let g:indentLine_color_term = 239
 
 Plug 'bling/vim-airline'
     let g:airline_theme='light'
-    let g:airline_enable_fugitive=1
-    let g:airline_enable_syntastic=0
+    let g:airline#extensions#branch#enabled = 1
+    let g:airline#extensions#branch#empty_message = ''
+    let g:airline#extensions#syntastic#enabled = 1
 
     " modify airline symbols
     if !exists('g:airline_symbols')
@@ -80,9 +83,16 @@ Plug 'bling/vim-airline'
 " Core {{{
 Plug 'ctrlpvim/ctrlp.vim'
     " let g:ctrlp_match_window = 'bottom,order:btt,min:20,max:20,results:20'
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .DS_Store
+      \ --ignore vendor/bundle
+      \ --ignore "**/*.pyc"
+      \ -g ""'
     let g:ctrlp_working_path_mode = 0
     let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$',
+        \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules|vendor\/bundle)$',
         \ 'file': '\.pyc$\|\.pyo$',
         \ }
     let g:ctrlp_open_multiple_files = '1jr'
@@ -96,6 +106,7 @@ Plug 'bufkill.vim'
 Plug 'matchit.zip'
 Plug 'tComment'
 Plug 'jiangmiao/auto-pairs'
+Plug 'gabesoft/vim-ags'
 
 Plug 'vim-scripts/YankRing.vim'
     let g:yankring_history_dir = '~/.vim/tmp'
@@ -155,16 +166,18 @@ Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-unimpaired'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
     let g:NumberToggleTrigger="#"
 
 " Tmux
 Plug 'tpope/vim-tbone'
-Plug 'tpope/vim-dispatch'
+" Plug 'tpope/vim-dispatch'
 
 " }}}
 
 " Programming {{{
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'scrooloose/syntastic'
     " let g:syntastic_check_on_open=1
     " let g:syntastic_enable_signs=1
@@ -316,7 +329,7 @@ Plug 'othree/javascript-libraries-syntax.vim'
 " PHP/Laravel {{{
 Plug 'StanAngeloff/php.vim'
 Plug 'xsbeats/vim-blade', { 'for': 'blade' }
-Plug 'adoy/vim-php-refactoring-toolbox'
+" Plug 'adoy/vim-php-refactoring-toolbox'
 " }}}
 
 " Ruby/Rails {{{
@@ -324,12 +337,14 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-rbenv'
+" Plug 'tpope/vim-rake'
+" Plug 'tpope/vim-rbenv'
 Plug 'Keithbsmiley/rspec.vim', { 'for': 'ruby' }
+Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
+    " let g:rspec_command = "Dispatch rspec {spec}"
 Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
-Plug 'skalnik/vim-vroom'
-    let g:vroom_use_dispatch = 1
+" Plug 'skalnik/vim-vroom'
+    " let g:vroom_use_dispatch = 1
 " }}}
 
 " Git {{{
@@ -343,8 +358,6 @@ Plug 'gregsexton/gitv', { 'on': 'Gitv' }
     nnoremap <Leader>gd :Gdiff<CR>
     nnoremap <Leader>gb :Gblame<CR>
     nnoremap <Leader>gl :exe ':!cd ' . expand('%:p:h') . '; git lg'<CR>
-    nnoremap <Leader>gh :Silent Glog<CR>
-    nnoremap <Leader>gH :Silent Glog<CR>:set nofoldenable<CR>
     nnoremap <Leader>gr :Gread<CR>
     nnoremap <Leader>gw :Gwrite<CR>
     nnoremap <Leader>gp :Git push<CR>

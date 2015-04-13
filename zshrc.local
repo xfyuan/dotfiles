@@ -11,13 +11,13 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew colored-man tmux tmuxinator git github git-extras git-flow composer)
+plugins=(brew colored-man tmux tmuxinator git github git-extras git-flow composer rails bundler)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 path=(
@@ -51,7 +51,7 @@ path=(
 #
 # aliases
 alias viv="vim ~/.vimrc"
-alias viz="vim ~/.zshrc"
+alias viz="vim ~/.zshrc.local"
 alias cl="clear"
 alias nv="nvim"
 
@@ -60,23 +60,27 @@ alias tk="tmux kill-session"
 alias hd="homestead"
 
 # dev env
-alias vmtw="cd ~/work/tw-projects/homestead"
 # alias heroup="git push heroku master && heroku run rake db:migrate"
+alias pgup="postgres -D /usr/local/var/postgres"
+
+alias gcup="cd ~/work/tw-projects/livetext/gcbase && boot2docker up && fig up -d"
+alias gcdown="cd ~/work/tw-projects/livetext/gcbase && fig stop && boot2docker halt"
 
 # alias devup="mysql.server start && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k start"
 # alias devdown="mysql.server stop && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k stop"
-# alias pgup="postgres -D /usr/local/var/postgres"
 
 alias art="php artisan"
 alias art:s="art serve"
 
-alias cc="vendor/bin/codecept"
-# alias cs="vendor/bin/codecept run --steps"
-# alias ccpb="vendor/bin/codecept run --env phpbrowser"
-# alias ccpj="vendor/bin/codecept run --env phantomjs"
 alias uu="vendor/bin/phpunit"
 alias spec="vendor/bin/phpspec"
+# alias cc="vendor/bin/codecept"
 
+alias sp="suspenders"
 
-export PATH="$HOME/.rbenv/bin:$PATH"
+# export PATH="$HOME/.rbenv/shims:$PATH"
 eval "$(rbenv init - zsh --no-rehash)"
+
+export DOCKER_CERT_PATH=/Users/xfyuan/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+export DOCKER_HOST=tcp://192.168.59.103:2376
