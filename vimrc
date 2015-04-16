@@ -19,7 +19,7 @@ set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
-set iskeyword+=.,$,%
+set iskeyword+=$,%
 
 set undodir=~/.vim/tmp/undo//     " undo files
 set undofile
@@ -94,7 +94,8 @@ set diffopt+=vertical
 autocmd BufWritePre * :%s/\s\+$//e
 
 set nofoldenable
-set foldmethod=marker
+set foldlevel=1
+set foldmethod=indent
 
 " Automatically fitting a quickfix window height: min=3, max=40
 au FileType qf call AdjustWindowHeight(3, 40)
@@ -239,9 +240,11 @@ endfunction
     " <H>       Go to beginning of line. Goes to previous line if repeated
     nnoremap <expr> H getpos('.')[2] == 1 ? 'k' : '0'
     " <j>       Down
+    nnoremap j gj
     inoremap jj <Esc>
     " <J>       Join Sentences
     " <k>       Up
+    nnoremap k gk
     " <K>
     " <l>       Right
     " <L>       Go to end of line. Goes to next line if repeated
@@ -319,10 +322,13 @@ endfunction
         nnoremap <buffer> ^ g^
     endfunction
     " <leader>e Show yank list
-    nnoremap <leader>e :YRShow<CR>
     nnoremap <leader>b :CtrlPBuffer<CR>
     nnoremap <leader>r :CtrlPMRU<CR>
+    nnoremap <leader>e :CtrlPRegister<CR>
+    nnoremap <leader>m :CtrlPMark<CR>
     nnoremap <leader>g :CtrlPTag<CR>
+    nnoremap <leader>f :CtrlPFunky<Cr>
+    nnoremap <Leader>u :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
     " <leader>t vim-rspec mappings
     nnoremap <leader>t :call RunCurrentSpecFile()<CR>
     nnoremap <leader>s :call RunNearestSpec()<CR>

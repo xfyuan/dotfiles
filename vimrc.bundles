@@ -13,8 +13,8 @@ call plug#begin('~/.vim/bundle')
 " Appearance {{{
 Plug 'w0ng/vim-hybrid'
 " Plug 'croaky/vim-colors-github'
-Plug 'saaguero/vim-github-colorscheme'
-Plug 'trusktr/seti.vim'
+" Plug 'saaguero/vim-github-colorscheme'
+" Plug 'trusktr/seti.vim'
 
 Plug 'junegunn/indentLine'
     let g:indentLine_char = '┊'
@@ -66,23 +66,11 @@ Plug 'bling/vim-airline'
         \ }
     " disable summary of changed hunks under source control.
     let g:airline#extensions#hunks#enabled = 0
-    " enable enhanced tabline.
-    " let g:airline#extensions#tabline#enabled = 1
-    " let g:airline#extensions#tabline#show_buffers = 0
-    " display tab number instead of # of splits (default)
-    " let g:airline#extensions#tabline#tab_nr_type = 1
-    " define how file names are displayed in tabline
-    " let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-    " no default separators for the tabline
-    " let g:airline#extensions#tabline#left_sep = ''
-    " let g:airline#extensions#tabline#left_alt_sep = ''
-    " let g:airline#extensions#tabline#right_sep = ''
-    " let g:airline#extensions#tabline#right_alt_sep = ''
 " }}}
 
 " Core {{{
 Plug 'ctrlpvim/ctrlp.vim'
-    " let g:ctrlp_match_window = 'bottom,order:btt,min:20,max:20,results:20'
+    let g:ctrlp_match_window = 'bottom,order:bbt,min:20,max:36'
     let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .git
       \ --ignore .svn
@@ -100,18 +88,17 @@ Plug 'ctrlpvim/ctrlp.vim'
     let g:ctrlp_lazy_update = 50
     let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 Plug 'felikz/ctrlp-py-matcher'
+Plug 'mattn/ctrlp-register'
+Plug 'mattn/ctrlp-mark'
+Plug 'tacahiroy/ctrlp-funky'
+    let g:ctrlp_funky_syntax_highlight = 1
 
-" Plug 'bling/vim-bufferline'
 Plug 'bufkill.vim'
 Plug 'matchit.zip'
 Plug 'tComment'
 Plug 'jiangmiao/auto-pairs'
 Plug 'gabesoft/vim-ags'
-
-Plug 'vim-scripts/YankRing.vim'
-    let g:yankring_history_dir = '~/.vim/tmp'
-    let g:yankring_replace_n_pkey = '<leader>['
-    let g:yankring_replace_n_nkey = '<leader>]'
+    nnoremap <C-y> :Ags <cword>
 
 Plug 'kristijanhusak/vim-multiple-cursors'
     " Disable NeoComplete once start selecting multiple cursors
@@ -137,12 +124,15 @@ Plug 'Lokaltog/vim-easymotion'
     " not case censitive
     let g:EasyMotion_smartcase = 1
 
+" gof opens the file manager at the directory of the file you are currently editing in Vim.
+" got opens the terminal at the directory of the file you are currently editing in Vim.
 Plug 'justinmk/vim-gtfo'
+
 Plug 'scrooloose/nerdtree'
     " Make it colourful and pretty
     let NERDChristmasTree = 1
     " Size of the NERD tree
-    let NERDTreeWinSize = 29
+    let NERDTreeWinSize = 40
     " Disable 'bookmarks' and 'help'
     let NERDTreeMinimalUI = 1
     " Show hidden files
@@ -159,25 +149,24 @@ Plug 'scrooloose/nerdtree'
         \ '\.vcxproj', '\.bundle', '\.DS_Store$', '\tags$']
 Plug 'jistr/vim-nerdtree-tabs'
     map <F3> <Plug>NERDTreeTabsToggle<CR>
+    nnoremap <C-u> :NERDTreeFind<CR>
     " Do not open NERDTree on startup
     let g:nerdtree_tabs_open_on_gui_startup = 0
 
-Plug 'tommcdo/vim-exchange'
+" Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
-Plug 'jeffkreeftmeijer/vim-numbertoggle'
-    let g:NumberToggleTrigger="#"
 
 " Tmux
-Plug 'tpope/vim-tbone'
+" Plug 'tpope/vim-tbone'
 " Plug 'tpope/vim-dispatch'
 
 " }}}
 
 " Programming {{{
-Plug 'AndrewRadev/splitjoin.vim'
+Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
     " let g:syntastic_check_on_open=1
     " let g:syntastic_enable_signs=1
@@ -185,7 +174,7 @@ Plug 'scrooloose/syntastic'
     let g:syntastic_phpcs_conf = "--tab-width=4 --standard=PSR2"
 
     " manual syntastic check
-    nnoremap <silent> <F7> :SyntasticCheck<CR>
+    " nnoremap <silent> <F7> :SyntasticCheck<CR>
     " fancy symbols
     let g:syntastic_error_symbol = '✗'
     let g:syntastic_warning_symbol = '‽'
@@ -213,72 +202,6 @@ Plug 'Shougo/neosnippet.vim'
     imap <C-j>     <Plug>(neosnippet_expand_or_jump)
     smap <C-j>     <Plug>(neosnippet_expand_or_jump)
     xmap <C-j>     <Plug>(neosnippet_expand_target)
-Plug 'Shougo/neocomplete.vim'
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_smart_case = 1
-    let g:neocomplete#enable_camel_case = 1
-    let g:neocomplete#enable_auto_delimiter = 1
-    let g:neocomplete#enable_fuzzy_completion = 1
-
-    let g:neocomplete#max_list = 30
-    let g:neocomplete#auto_completion_start_length = 3
-    let g:neocomplete#manual_completion_start_length = 3
-    let g:neocomplete#sources#buffer#disabled_pattern = '\.log\|\.log\.\|\.jax'
-    let g:neocomplete#lock_buffer_name_pattern = '\.log\|\.log\.\|.*quickrun.*\|.jax'
-
-    " Define dictionary
-    let g:neocomplete#sources#dictionary#dictionaries = {
-        \   'default'    : '',
-        \   'ruby'       : $HOME.'/.vim/bundle/vim-dicts/dict/ruby.dict',
-        \   'coffee'     : $HOME.'/.vim/bundle/vim-dicts/dict/node.dict',
-        \ }
-
-    " Define keyword
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns._ = '\h\w*'
-
-    " Enable heavy omni completion
-    let g:neocomplete#force_overwrite_completefunc = 1
-    if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
-    endif
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-        let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-    if !exists('g:neocomplete#sources#omni#functions')
-        let g:neocomplete#sources#omni#functions = {}
-    endif
-
-    " Plugin key-mappings
-    inoremap <expr><C-g> pumvisible() ? neocomplete#undo_completion() : "<ESC>"
-    inoremap <expr><C-l> neocomplete#complete_common_string()
-
-    " <CR> close popup and save indent
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-        function! s:my_cr_function()
-            return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-        endfunction
-
-    " <TAB> completion
-    inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" :
-                               \ <SID>check_back_space() ? "\<TAB>" :
-                               \ neocomplete#start_manual_complete()
-        function! s:check_back_space()
-            let col = col('.') - 1
-            return !col || getline('.')[col - 1] =~ '\s'
-        endfunction
-    " <S-TAB> completion backward
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-H>"
-    " <BS> close popup and delete backword char
-    inoremap <expr><BS> pumvisible() ?
-                \ neocomplete#smart_close_popup()."\<C-H>" :
-                \ AutoPairsDelete()
-    " <Space> close popup
-    inoremap <expr><Space> pumvisible() ?
-                \ neocomplete#close_popup()."\<Space>" : "\<Space>"
-
 " }}}
 
 " Text Objects {{{
@@ -318,7 +241,7 @@ Plug 'wavded/vim-stylus', { 'for': 'styl' }
 
 " JavaScript {{{
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'moll/vim-node'
+" Plug 'moll/vim-node'
 Plug 'pangloss/vim-javascript'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'othree/javascript-libraries-syntax.vim'
@@ -327,24 +250,22 @@ Plug 'othree/javascript-libraries-syntax.vim'
 " }}}
 
 " PHP/Laravel {{{
-Plug 'StanAngeloff/php.vim'
+Plug 'StanAngeloff/php.vim', { 'for': 'php' }
 Plug 'xsbeats/vim-blade', { 'for': 'blade' }
 " Plug 'adoy/vim-php-refactoring-toolbox'
 " }}}
 
 " Ruby/Rails {{{
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-rails'
-" Plug 'tpope/vim-rake'
-" Plug 'tpope/vim-rbenv'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-bundler', { 'for': 'ruby' }
+Plug 'tpope/vim-endwise', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+" Plug 'tpope/vim-rake', { 'for': 'ruby' }
+" Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 Plug 'Keithbsmiley/rspec.vim', { 'for': 'ruby' }
 Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
-    " let g:rspec_command = "Dispatch rspec {spec}"
 Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
-" Plug 'skalnik/vim-vroom'
-    " let g:vroom_use_dispatch = 1
+Plug 'AndrewRadev/splitjoin.vim', { 'for': 'ruby' }
 " }}}
 
 " Git {{{
@@ -366,7 +287,7 @@ Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 " }}}
 
 " Markdown {{{
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 " Plug 'gabrielelana/vim-markdown'
 "     let g:markdown_enable_mappings = 0
 Plug 'junegunn/goyo.vim',      { 'on': 'Goyo' }
