@@ -58,6 +58,7 @@ alias nv="nvim"
 alias tmux="TERM=screen-256color-bce tmux"
 alias tk="tmux kill-session"
 alias hd="homestead"
+alias re="rbenv"
 
 # dev env
 # alias heroup="git push heroku master && heroku run rake db:migrate"
