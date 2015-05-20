@@ -167,6 +167,15 @@ Plug 'tpope/vim-unimpaired'
 
 " Programming {{{
 Plug 'ervandew/supertab'
+    " let g:SuperTabDefaultCompletionType = "context"
+Plug 'rizzatti/dash.vim'
+    " let g:dash_map = {
+    "         \ 'ruby':   ['ruby', 'rails', 'gem'],
+    "         \ 'coffee': ['coffee', 'javascript', 'jquery', 'angularjs'],
+    "         \ 'scss':   ['css', 'sass', 'bootstrap', 'bourbon'],
+    "         \ 'less':   ['css', 'less', 'bootstrap', 'bourbon']
+    "         \ }
+
 Plug 'scrooloose/syntastic'
     " let g:syntastic_check_on_open=1
     " let g:syntastic_enable_signs=1
@@ -229,6 +238,7 @@ Plug 'mattn/emmet-vim'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
 Plug 'tpope/vim-haml', { 'for': 'haml' }
+Plug 'mustache/vim-mustache-handlebars', { 'for': 'html.handlebars' }
 " }}}
 
 " CSS {{{
@@ -264,8 +274,10 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 " Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 Plug 'Keithbsmiley/rspec.vim', { 'for': 'ruby' }
 Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
+    let g:rspec_command = "!bundle exec rspec {spec}"
 Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
 Plug 'AndrewRadev/splitjoin.vim', { 'for': 'ruby' }
+Plug 'AndrewRadev/switch.vim', { 'for': ['ruby', 'eruby', 'coffee', 'haml'] }
 " }}}
 
 " Git {{{

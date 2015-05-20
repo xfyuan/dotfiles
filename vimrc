@@ -89,6 +89,8 @@ set wildignore+=vendor/bundle/**,vendor/cache/**,vendor/gems/**
 " Always use vertical diffs
 set diffopt+=vertical
 
+set scrolloff=5
+
 " Remove trailing whitespaces when saving
 " Wanna know more? http://vim.wikia.com/wiki/Remove_unwanted_spaces
 autocmd BufWritePre * :%s/\s\+$//e
@@ -171,6 +173,9 @@ endfunction
     " Move to prev/next buffer
     nnoremap <left>  <ESC>:bN<CR>
     nnoremap <right> <ESC>:bn<CR>
+
+    " press Backspace to toggle the current fold open/closed. However, if the cursor is not in a fold, move to the right
+    nnoremap <silent> <BS> @=(foldlevel('.')?'za':"\<BS>")<CR>
 " }}}
 
 " Characters (Normal Mode) {{{
@@ -238,7 +243,7 @@ endfunction
     " *<G>      Go to specific line number
     " <h>       Left
     " <H>       Go to beginning of line. Goes to previous line if repeated
-    nnoremap <expr> H getpos('.')[2] == 1 ? 'k' : '0'
+    nnoremap <expr> H getpos('.')[2] == 1 ? 'k' : '^'
     " <j>       Down
     nnoremap j gj
     inoremap jj <Esc>
@@ -355,7 +360,7 @@ endfunction
     " <leader>D Close buffer
     nnoremap <leader>D :bd<CR>
     " <leader>f Format file
-    nnoremap <leader>fj :%!js-beautify -s=2 -q -B -f -<CR>
+    nnoremap <leader>fj :%!js-beautify -s=2 -q -f -<CR>
     nnoremap <leader>fs :%!css-beautify -s=2 -q -L -N -f -<CR>
     nnoremap <leader>ff :%!html-beautify -s=2 -q -f -<CR>
     " <leader>F Format file
@@ -364,6 +369,7 @@ endfunction
     " <leader>h
     " <leader>j
     " <leader>k
+    nmap <leader>k <Plug>DashSearch
     " <leader>l
     " <leader>L Reduce a sequence of blank lines into a single line
     nnoremap <leader>L GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
