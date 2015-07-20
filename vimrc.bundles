@@ -12,6 +12,7 @@ call plug#begin('~/.vim/bundle')
 
 " Appearance {{{
 Plug 'w0ng/vim-hybrid'
+Plug 'NLKNguyen/papercolor-theme'
 " Plug 'croaky/vim-colors-github'
 " Plug 'saaguero/vim-github-colorscheme'
 " Plug 'trusktr/seti.vim'
@@ -76,11 +77,13 @@ Plug 'ctrlpvim/ctrlp.vim'
       \ --ignore .svn
       \ --ignore .DS_Store
       \ --ignore vendor/bundle
+      \ --ignore bower_components
+      \ --ignore node_modules
       \ --ignore "**/*.pyc"
       \ -g ""'
     let g:ctrlp_working_path_mode = 0
     let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules|vendor\/bundle)$',
+        \ 'dir':  '\v[\/](\.git|\.hg|\.svn|bower_components|node_modules|vendor\/bundle)$',
         \ 'file': '\.pyc$\|\.pyo$',
         \ }
     let g:ctrlp_open_multiple_files = '1jr'
