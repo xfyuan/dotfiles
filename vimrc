@@ -48,8 +48,8 @@ endif
 autocmd! FileType * setlocal formatoptions-=t
 
 " Softtabs, 4 spaces
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set shiftround
 set expandtab
 
@@ -213,6 +213,7 @@ endfunction
     nnoremap Y y$
     " <u>       Undo
     inoremap uu _
+    inoremap hh -
     " <U>       Undo all latest changes on last changed line
     " <i>       Insert
     " <I>       Insert at beginning of line
