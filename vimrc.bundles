@@ -13,7 +13,7 @@ call plug#begin('~/.vim/bundle')
 " Appearance {{{
 Plug 'w0ng/vim-hybrid'
 Plug 'NLKNguyen/papercolor-theme'
-" Plug 'croaky/vim-colors-github'
+Plug 'croaky/vim-colors-github'
 " Plug 'saaguero/vim-github-colorscheme'
 " Plug 'trusktr/seti.vim'
 
@@ -204,6 +204,7 @@ Plug 'scrooloose/syntastic'
         \ 'active_filetypes': ['php', 'javascript', 'ruby', 'coffee'],
         \ 'passive_filetypes': ['html', 'css', 'scss'] }
 
+Plug 'zerowidth/vim-copy-as-rtf'
 Plug 'zhuochun/vim-dicts'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'

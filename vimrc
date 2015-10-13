@@ -214,6 +214,9 @@ endfunction
     " <u>       Undo
     inoremap uu _
     inoremap hh -
+    inoremap ii =
+    inoremap kk ->
+    inoremap jk =>
     " <U>       Undo all latest changes on last changed line
     " <i>       Insert
     " <I>       Insert at beginning of line
