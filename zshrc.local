@@ -11,20 +11,19 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew colored-man tmux tmuxinator git github git-extras git-flow composer rails bundler)
+# plugins=(brew colored-man tmux tmuxinator git github git-extras git-flow docker rails bundler)
+plugins=(brew colored-man tmux tmuxinator git git-extras git-flow docker rails bundler)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
+# export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 path=(
-    bin
     vendor/bin
     $HOME/.bin
-    $HOME/.composer/vendor/bin
     $path
 )
 
@@ -59,13 +58,15 @@ alias tmux="TERM=screen-256color-bce tmux"
 alias tk="tmux kill-session"
 alias hd="homestead"
 alias re="rbenv"
+alias dp="docker-compose"
+alias dm="docker-machine"
 
 # dev env
 # alias heroup="git push heroku master && heroku run rake db:migrate"
 alias pgup="postgres -D /usr/local/var/postgres"
 
-alias gcup="cd ~/work/tw-projects/livetext/gcbase && boot2docker up && fig up -d"
-alias gcdown="cd ~/work/tw-projects/livetext/gcbase && fig stop && boot2docker halt"
+alias gcup="cd ~/work/tw-projects/livetext/gcbase && docker-machine start livetext && docker-compose up -d"
+alias gcdown="cd ~/work/tw-projects/livetext/gcbase && docker-compose stop && docker-machine stop livetext"
 
 # alias devup="mysql.server start && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k start"
 # alias devdown="mysql.server stop && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k stop"
@@ -82,6 +83,3 @@ alias sp="suspenders"
 # export PATH="$HOME/.rbenv/shims:$PATH"
 eval "$(rbenv init - zsh --no-rehash)"
 
-export DOCKER_CERT_PATH=/Users/xfyuan/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
-export DOCKER_HOST=tcp://192.168.59.103:2376
