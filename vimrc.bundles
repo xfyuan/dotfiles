@@ -14,13 +14,17 @@ call plug#begin('~/.vim/bundle')
 Plug 'w0ng/vim-hybrid'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'croaky/vim-colors-github'
+Plug 'junegunn/seoul256.vim'
 " Plug 'saaguero/vim-github-colorscheme'
-" Plug 'trusktr/seti.vim'
 
-Plug 'junegunn/indentLine'
-    let g:indentLine_char = '┊'
-    let g:indentLine_color_term = 239
+Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable'  }
+  autocmd! User indentLine doautocmd indentLine Syntax
+  let g:indentLine_enabled = 0
+" Plug 'junegunn/indentLine'
+"     let g:indentLine_char = '┊'
+"     let g:indentLine_color_term = 239
 
+Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-airline'
     let g:airline_theme='light'
     let g:airline#extensions#branch#enabled = 1
@@ -34,7 +38,7 @@ Plug 'bling/vim-airline'
     let g:airline_left_sep = '»'
     let g:airline_left_sep = '▶'
     let g:airline_right_sep = '«'
-    let g:airline_right_sep = '◀'
+    " let g:airline_right_sep = '◀'
     let g:airline_symbols.linenr = '␊'
     let g:airline_symbols.linenr = '␤'
     let g:airline_symbols.linenr = '¶'
@@ -70,26 +74,29 @@ Plug 'bling/vim-airline'
 " }}}
 
 " Core {{{
-Plug 'ctrlpvim/ctrlp.vim'
-    let g:ctrlp_match_window = 'bottom,order:bbt,min:20,max:36'
-    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      \ --ignore .git
-      \ --ignore .svn
-      \ --ignore .DS_Store
-      \ --ignore vendor/bundle
-      \ --ignore bower_components
-      \ --ignore node_modules
-      \ --ignore "**/*.pyc"
-      \ -g ""'
-    let g:ctrlp_working_path_mode = 0
-    let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\v[\/](\.git|\.hg|\.svn|bower_components|node_modules|vendor\/bundle)$',
-        \ 'file': '\.pyc$\|\.pyo$',
-        \ }
-    let g:ctrlp_open_multiple_files = '1jr'
-    let g:ctrlp_max_files = 0
-    let g:ctrlp_lazy_update = 50
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+if has('gui_running')
+  Plug 'ctrlpvim/ctrlp.vim'
+      let g:ctrlp_match_window = 'bottom,order:bbt,min:20,max:36'
+      let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+        \ --ignore .git
+        \ --ignore .svn
+        \ --ignore .DS_Store
+        \ --ignore vendor/bundle
+        \ --ignore bower_components
+        \ --ignore node_modules
+        \ --ignore "**/*.pyc"
+        \ -g ""'
+      let g:ctrlp_working_path_mode = 0
+      let g:ctrlp_custom_ignore = {
+          \ 'dir':  '\v[\/](\.git|\.hg|\.svn|bower_components|node_modules|vendor\/bundle)$',
+          \ 'file': '\.pyc$\|\.pyo$',
+          \ }
+      let g:ctrlp_open_multiple_files = '1jr'
+      let g:ctrlp_max_files = 0
+      let g:ctrlp_lazy_update = 50
+      let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+
 Plug 'felikz/ctrlp-py-matcher'
 Plug 'mattn/ctrlp-register'
 Plug 'mattn/ctrlp-mark'
@@ -120,6 +127,20 @@ Plug 'kristijanhusak/vim-multiple-cursors'
 Plug 'junegunn/vim-easy-align'
 	" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 	xmap <CR>      <Plug>(EasyAlign)
+Plug 'junegunn/vim-pseudocl'
+" Improved /-search for Vim
+Plug 'junegunn/vim-oblique'
+" Find-N-Replace in Vim with live preview
+Plug 'junegunn/vim-fnr'
+" Peekaboo extends " and @ in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
+Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+Plug 'junegunn/fzf.vim'
+
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'majutsushi/tagbar'
+  let g:tagbar_sort = 0
 
 Plug 'Lokaltog/vim-easymotion'
     " easymotion prefix
@@ -161,6 +182,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-projectionist'
 
 " Tmux
 " Plug 'tpope/vim-tbone'
@@ -170,14 +192,7 @@ Plug 'tpope/vim-unimpaired'
 
 " Programming {{{
 Plug 'ervandew/supertab'
-    " let g:SuperTabDefaultCompletionType = "context"
 Plug 'rizzatti/dash.vim'
-    " let g:dash_map = {
-    "         \ 'ruby':   ['ruby', 'rails', 'gem'],
-    "         \ 'coffee': ['coffee', 'javascript', 'jquery', 'angularjs'],
-    "         \ 'scss':   ['css', 'sass', 'bootstrap', 'bourbon'],
-    "         \ 'less':   ['css', 'less', 'bootstrap', 'bourbon']
-    "         \ }
 
 Plug 'scrooloose/syntastic'
     " let g:syntastic_check_on_open=1
@@ -204,13 +219,13 @@ Plug 'scrooloose/syntastic'
         \ 'active_filetypes': ['php', 'javascript', 'ruby', 'coffee'],
         \ 'passive_filetypes': ['html', 'css', 'scss'] }
 
-Plug 'zerowidth/vim-copy-as-rtf'
+Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF' }
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'zhuochun/vim-dicts'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/neosnippet.vim'
     " Remove snippet markers after save
     autocmd! BufWrite * NeoSnippetClearMarkers
-
     " Plugin key-mappings
     imap <C-j>     <Plug>(neosnippet_expand_or_jump)
     smap <C-j>     <Plug>(neosnippet_expand_or_jump)
@@ -243,6 +258,7 @@ Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
 Plug 'tpope/vim-haml', { 'for': 'haml' }
 Plug 'mustache/vim-mustache-handlebars', { 'for': 'html.handlebars' }
+Plug 'honza/dockerfile.vim'
 " }}}
 
 " CSS {{{
@@ -256,11 +272,16 @@ Plug 'wavded/vim-stylus', { 'for': 'styl' }
 " JavaScript {{{
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 " Plug 'moll/vim-node'
+Plug 'othree/yajs.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'othree/javascript-libraries-syntax.vim'
     let g:used_javascript_libs =
-        \ 'jquery,underscore,backbone,angularjs,angularui,jasmine'
+        \ 'jquery,underscore,angularjs,angularui,jasmine'
+Plug 'mxw/vim-jsx'
+  let g:jsx_ext_required = 0
+Plug 'geekjuice/vim-mocha', { 'for': 'javascript' }
+  let g:mocha_js_command = "!mocha --compilers .:babel-core/register test/unit/setup.js {spec}"
 " }}}
 
 " PHP/Laravel {{{
@@ -279,17 +300,21 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'Keithbsmiley/rspec.vim', { 'for': 'ruby' }
 Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
     let g:rspec_command = "!bundle exec rspec {spec}"
+    " if filereadable("../docker-compose.yml")
+    "   let g:rspec_command = "!docker-compose run xlym bundle exec rspec {spec}"
+    " endif
 Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
-Plug 'AndrewRadev/splitjoin.vim', { 'for': 'ruby' }
 Plug 'AndrewRadev/switch.vim', { 'for': ['ruby', 'eruby', 'coffee', 'haml'] }
 " }}}
 
 " Git {{{
 Plug 'mhinz/vim-signify'
-    let g:signify_vcs_list = ['git', 'hg']
+    let g:signify_vcs_list = ['git']
 Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv', { 'on': 'Gitv' }
-    nnoremap <leader>gv :Gitv<CR>
+Plug 'junegunn/gv.vim'
+" Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+    nnoremap <leader>gv :GV<CR>
+    nnoremap <leader>g4 :GV!<CR>
     nnoremap <leader>gc :Gcommit -v<CR>
     nnoremap <Leader>gs :Gstatus<CR>
     nnoremap <Leader>gd :Gdiff<CR>
@@ -303,11 +328,38 @@ Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 " }}}
 
 " Markdown {{{
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-" Plug 'gabrielelana/vim-markdown'
-"     let g:markdown_enable_mappings = 0
-Plug 'junegunn/goyo.vim',      { 'on': 'Goyo' }
-Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+Plug 'plasticboy/vim-markdown'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+  let g:limelight_paragraph_span = 1
+  let g:limelight_priority = -1
+
+function! s:goyo_enter()
+  if has('gui_running')
+    set fullscreen
+    set background=light
+    set linespace=7
+  elseif exists('$TMUX')
+    silent !tmux set status off
+  endif
+  " hi NonText ctermfg=101
+  Limelight
+endfunction
+
+function! s:goyo_leave()
+  if has('gui_running')
+    set nofullscreen
+    set background=dark
+    set linespace=0
+  elseif exists('$TMUX')
+    silent !tmux set status on
+  endif
+  Limelight!
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+nnoremap <Leader>md :Goyo<CR>
 " }}}
 
 

@@ -57,7 +57,7 @@ set expandtab
 set list listchars=tab:»·,trail:⌴,conceal:…,extends:❯,precedes:❮,nbsp:_
 
 " set tag location
-set tags=./tags
+set tags=./tags;/
 set tags+=gems.tags
 
 " Color scheme
@@ -146,6 +146,8 @@ endfunction
     nnoremap <silent> <F8> :call DiffToggle()<CR>
     " F9    Toggle iTerm 2
     " F10   Toggle Tagbar
+    nnoremap <F10> :TagbarToggle<cr>
+    inoremap <F10> <ESC>:TagbarToggle<cr>
     " F11   Toggle Goyo
     " F12   Toggle ZoomWin
 
@@ -311,6 +313,12 @@ endfunction
     " <leader>4
     nnoremap <leader>4 80A=<Esc>d80<Bar>
     " <leader>5
+    " Markdown headings
+    nnoremap <leader>11 m`yypVr=``
+    nnoremap <leader>22 m`yypVr-``
+    nnoremap <leader>33 m`^i### <esc>``4l
+    nnoremap <leader>44 m`^i#### <esc>``5l
+    nnoremap <leader>55 m`^i##### <esc>``6l
     " <leader>6
     " <leader>7
     " <leader>8
@@ -331,18 +339,42 @@ endfunction
         nnoremap <buffer> ^ g^
     endfunction
     " <leader>e Show yank list
-    nnoremap <leader>b :CtrlPBuffer<CR>
-    nnoremap <leader>r :CtrlPMRU<CR>
-    nnoremap <leader>e :CtrlPRegister<CR>
-    nnoremap <leader>m :CtrlPMark<CR>
-    nnoremap <leader>g :CtrlPTag<CR>
-    nnoremap <leader>f :CtrlPFunky<Cr>
-    nnoremap <Leader>u :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+    if has('gui_running')
+      " for ctrlp plugin
+      nnoremap <leader>b :CtrlPBuffer<CR>
+      nnoremap <leader>h :CtrlPMRU<CR>
+      nnoremap <leader>e :CtrlPRegister<CR>
+      nnoremap <leader>m :CtrlPMark<CR>
+      nnoremap <leader>g :CtrlPTag<CR>
+      nnoremap <leader>f :CtrlPFunky<Cr>
+      nnoremap <Leader>u :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+    else
+      " for fzf plugin
+      nnoremap <C-p> :GitFiles<CR>
+      nnoremap <leader>f :Files<CR>
+      nnoremap <leader>b :Buffers<CR>
+      nnoremap <leader>h :History<CR>
+      nnoremap <leader>m :Marks<CR>
+      nnoremap <leader>cc :Colors<CR>
+      nnoremap <leader>bc :BCommits<CR>
+      nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
+
+      imap <c-x><c-k> <plug>(fzf-complete-word)
+      imap <c-x><c-f> <plug>(fzf-complete-path)
+      imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+      imap <c-x><c-l> <plug>(fzf-complete-line)
+
+      nmap <leader><tab> <plug>(fzf-maps-n)
+      xmap <leader><tab> <plug>(fzf-maps-x)
+      omap <leader><tab> <plug>(fzf-maps-o)
+    endif
+
+    nnoremap <leader>j :!gulp test<CR>
     " <leader>t vim-rspec mappings
     nnoremap <leader>t :call RunCurrentSpecFile()<CR>
     nnoremap <leader>s :call RunNearestSpec()<CR>
     nnoremap <leader>l :call RunLastSpec()<CR>
-    nnoremap <Leader>a :call RunAllSpecs()<CR>
+    " nnoremap <Leader>a :call RunAllSpecs()<CR>
     " <leader>y Yank content in OS's clipboard
     vnoremap <leader>y "*y
     " <leader>u
@@ -380,9 +412,6 @@ endfunction
     " <leader>z
     " <leader>x
     " <leader>c
-    " Index ctags from any project, including those outside Rails
-    nnoremap <leader>ct :!ctags -R --languages=ruby,coffee,less,sass --exclude=.git --exclude=log --exclude=tmp .<CR>
-    nnoremap <leader>cg :!ctags -R --languages=ruby -f gems.tags  $(bundle list --paths)<CR>
 
     " <leader>v Select the just pasted text
     nnoremap <leader>v V`]
@@ -392,6 +421,7 @@ endfunction
     " <leader>M Remove ^M
     nnoremap <leader>M mmHmt:%s/<C-V><CR>//ge<CR>'tzt'm
     " <leader>, Run Eval
+    noremap <leader>; m`A;<Esc>``
 " }}}
 
 " <C-*> (Normal Mode) {{{
@@ -468,6 +498,16 @@ endfunction
     cnoremap <C-Y> <C-r>*
     cnoremap %% <C-R>=expand('%:h').'/'<cr>
 " }}}
+" ----------------------------------------------------------------------------
+" ?ie | entire object
+" ----------------------------------------------------------------------------
+xnoremap <silent> ie gg0oG$
+onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
+" ----------------------------------------------------------------------------
+" ?il | inner line
+" ----------------------------------------------------------------------------
+xnoremap <silent> il <Esc>^vg_
+onoremap <silent> il :<C-U>normal! ^vg_<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -618,6 +658,11 @@ function! s:MarkdownDef()
     nnoremap <buffer> $ g$
     nnoremap <buffer> ^ g^
 endfunction
+
+augroup vimrc
+  autocmd!
+  au FileType ruby,coffee IndentLinesEnable
+augroup END
 " }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
