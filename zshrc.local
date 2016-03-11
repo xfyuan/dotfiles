@@ -23,6 +23,7 @@ source $ZSH/oh-my-zsh.sh
 
 path=(
     vendor/bin
+    node_modules/.bin
     $HOME/.bin
     $path
 )
@@ -62,6 +63,9 @@ alias dp="docker-compose"
 alias dm="docker-machine"
 
 # dev env
+alias ctt="ctags -R --languages=ruby,coffee,less,sass --exclude=.git --exclude=log --exclude=tmp ."
+# alias ctg="ctags -R --languages=ruby -f gems.tags  $(bundle list --paths)"
+
 # alias heroup="git push heroku master && heroku run rake db:migrate"
 alias pgup="postgres -D /usr/local/var/postgres"
 
