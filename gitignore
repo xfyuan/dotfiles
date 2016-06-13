@@ -2,6 +2,7 @@
 *.sw[nop]
 .bundle
 .env
+.tm_properties
 db/*.sqlite3
 log/*.log
 rerun.txt
