@@ -11,10 +11,13 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " Appearance {{{
+" Dark
 Plug 'w0ng/vim-hybrid'
+Plug 'morhetz/gruvbox'
+
+" Light
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'croaky/vim-colors-github'
-Plug 'junegunn/seoul256.vim'
 " Plug 'saaguero/vim-github-colorscheme'
 
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable'  }
@@ -95,14 +98,16 @@ if has('gui_running')
       let g:ctrlp_max_files = 0
       let g:ctrlp_lazy_update = 50
       let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+
+  Plug 'felikz/ctrlp-py-matcher'
+  Plug 'mattn/ctrlp-register'
+  Plug 'mattn/ctrlp-mark'
+  Plug 'tacahiroy/ctrlp-funky'
+      let g:ctrlp_funky_syntax_highlight = 1
 endif
 
-Plug 'felikz/ctrlp-py-matcher'
-Plug 'mattn/ctrlp-register'
-Plug 'mattn/ctrlp-mark'
-Plug 'tacahiroy/ctrlp-funky'
-    let g:ctrlp_funky_syntax_highlight = 1
-
+Plug 'szw/vim-maximizer'
+  let g:maximizer_default_mapping_key = '<F4>'
 Plug 'bufkill.vim'
 Plug 'matchit.zip'
 Plug 'tComment'
@@ -199,6 +204,7 @@ Plug 'scrooloose/syntastic'
     " let g:syntastic_enable_signs=1
     let g:syntastic_enable_highlighting = 0
     let g:syntastic_phpcs_conf = "--tab-width=4 --standard=PSR2"
+    let g:syntastic_javascript_checkers = ['jshint']
 
     " manual syntastic check
     " nnoremap <silent> <F7> :SyntasticCheck<CR>
@@ -266,7 +272,7 @@ Plug 'gorodinskiy/vim-coloresque', { 'for': ['css', 'scss', 'less'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss', 'less'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
-Plug 'wavded/vim-stylus', { 'for': 'styl' }
+" Plug 'wavded/vim-stylus', { 'for': 'styl' }
 " }}}
 
 " JavaScript {{{
@@ -277,16 +283,16 @@ Plug 'pangloss/vim-javascript'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'othree/javascript-libraries-syntax.vim'
     let g:used_javascript_libs =
-        \ 'jquery,underscore,angularjs,angularui,jasmine'
-Plug 'mxw/vim-jsx'
-  let g:jsx_ext_required = 0
-Plug 'geekjuice/vim-mocha', { 'for': 'javascript' }
-  let g:mocha_js_command = "!mocha --compilers .:babel-core/register test/unit/setup.js {spec}"
+        \ 'jquery,underscore,angularjs,angularui,jasmine,react,flux'
+" Plug 'mxw/vim-jsx'
+  " let g:jsx_ext_required = 0
+" Plug 'geekjuice/vim-mocha', { 'for': 'javascript' }
+  " let g:mocha_js_command = "!mocha --compilers .:babel-core/register test/unit/setup.js {spec}"
 " }}}
 
 " PHP/Laravel {{{
 Plug 'StanAngeloff/php.vim', { 'for': 'php' }
-Plug 'xsbeats/vim-blade', { 'for': 'blade' }
+" Plug 'xsbeats/vim-blade', { 'for': 'blade' }
 " Plug 'adoy/vim-php-refactoring-toolbox'
 " }}}
 
