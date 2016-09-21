@@ -29,42 +29,43 @@ Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable'  }
 
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-airline'
-    let g:airline_theme='light'
+    let g:airline_theme='simple'
+    let g:airline_powerline_fonts=1
     let g:airline#extensions#branch#enabled = 1
     let g:airline#extensions#branch#empty_message = ''
     let g:airline#extensions#syntastic#enabled = 1
 
     " modify airline symbols
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
-    endif
-    let g:airline_left_sep = '»'
-    let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '«'
-    " let g:airline_right_sep = '◀'
-    let g:airline_symbols.linenr = '␊'
-    let g:airline_symbols.linenr = '␤'
-    let g:airline_symbols.linenr = '¶'
-    let g:airline_symbols.branch = '⎇'
-    let g:airline_symbols.paste = 'ρ'
-    let g:airline_symbols.paste = 'Þ'
-    let g:airline_symbols.paste = '∥'
-    let g:airline_symbols.whitespace = 'Ξ'
-    " let g:airline_symbols.whitespace = '☯'
+    " if !exists('g:airline_symbols')
+        " let g:airline_symbols = {}
+    " endif
+    " let g:airline_left_sep = '»'
+    " let g:airline_left_sep = '▶'
+    " let g:airline_right_sep = '«'
+    " " let g:airline_right_sep = '◀'
+    " let g:airline_symbols.linenr = '␊'
+    " let g:airline_symbols.linenr = '␤'
+    " let g:airline_symbols.linenr = '¶'
+    " let g:airline_symbols.branch = '⎇'
+    " let g:airline_symbols.paste = 'ρ'
+    " let g:airline_symbols.paste = 'Þ'
+    " let g:airline_symbols.paste = '∥'
+    " let g:airline_symbols.whitespace = 'Ξ'
+    " " let g:airline_symbols.whitespace = '☯'
     " shorter mode names
-    let g:airline_mode_map = {
-        \ '__' : '-',
-        \ 'n'  : 'N',
-        \ 'i'  : 'I',
-        \ 'R'  : 'R',
-        \ 'c'  : 'C',
-        \ 'v'  : 'V',
-        \ 'V'  : 'V',
-        \ '' : 'V',
-        \ 's'  : 'S',
-        \ 'S'  : 'S',
-        \ '' : 'S',
-        \ }
+    " let g:airline_mode_map = {
+    "     \ '__' : '-',
+    "     \ 'n'  : 'N',
+    "     \ 'i'  : 'I',
+    "     \ 'R'  : 'R',
+    "     \ 'c'  : 'C',
+    "     \ 'v'  : 'V',
+    "     \ 'V'  : 'V',
+    "     \ '' : 'V',
+    "     \ 's'  : 'S',
+    "     \ 'S'  : 'S',
+    "     \ '' : 'S',
+    "     \ }
     " control which sections get truncated and at what width. >
     let g:airline#extensions#default#section_truncate_width = {
         \   'b': 79,
@@ -107,13 +108,14 @@ if has('gui_running')
 endif
 
 Plug 'szw/vim-maximizer'
-  let g:maximizer_default_mapping_key = '<F4>'
+  let g:maximizer_default_mapping_key = '<F5>'
 Plug 'bufkill.vim'
 Plug 'matchit.zip'
 Plug 'tComment'
 Plug 'jiangmiao/auto-pairs'
+Plug 'will133/vim-dirdiff'
 Plug 'gabesoft/vim-ags'
-    nnoremap <C-y> :Ags <cword>
+  nnoremap <C-y> :Ags <cword>
 
 Plug 'kristijanhusak/vim-multiple-cursors'
     " Disable NeoComplete once start selecting multiple cursors
@@ -198,6 +200,8 @@ Plug 'tpope/vim-projectionist'
 " Programming {{{
 Plug 'ervandew/supertab'
 Plug 'rizzatti/dash.vim'
+Plug 'editorconfig/editorconfig-vim'
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 Plug 'scrooloose/syntastic'
     " let g:syntastic_check_on_open=1
@@ -304,13 +308,14 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 " Plug 'tpope/vim-rake', { 'for': 'ruby' }
 " Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 Plug 'Keithbsmiley/rspec.vim', { 'for': 'ruby' }
-Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
-    let g:rspec_command = "!bundle exec rspec {spec}"
+" Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
+    " let g:rspec_command = "!bundle exec rspec {spec}"
     " if filereadable("../docker-compose.yml")
     "   let g:rspec_command = "!docker-compose run xlym bundle exec rspec {spec}"
     " endif
 Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
 Plug 'AndrewRadev/switch.vim', { 'for': ['ruby', 'eruby', 'coffee', 'haml'] }
+Plug 'janko-m/vim-test', { 'for': 'ruby' }
 " }}}
 
 " Git {{{

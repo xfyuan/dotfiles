@@ -8,7 +8,6 @@ if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
 endif
 
-
 set backspace=2   " Backspace deletes like most programs in insert mode
 set nobackup
 set nowritebackup
@@ -63,7 +62,8 @@ set tags+=gems.tags
 " Color scheme
 set background=dark
 colorscheme hybrid
-set guifont=Menlo\ Regular:h13
+" set guifont=Menlo\ Regular:h13
+set guifont=Source\ Code\ Pro\ Semibold:h14
 
 " Make it obvious where 80 characters is
 set textwidth=80
@@ -138,16 +138,16 @@ endfunction
     inoremap <F2> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
     " F3    Toggle NERDTree
     " F4
-    " F5    Toggle Undotree
+    nnoremap <F4> :TagbarToggle<cr>
+    inoremap <F4> <ESC>:TagbarToggle<cr>
+    " F5    Toggle Tagbar
     " F6    Toggle Paste mode
     set pastetoggle=<F6>
     " F7    Tigger Syntastic manual check
     " F8
     nnoremap <silent> <F8> :call DiffToggle()<CR>
     " F9    Toggle iTerm 2
-    " F10   Toggle Tagbar
-    nnoremap <F10> :TagbarToggle<cr>
-    inoremap <F10> <ESC>:TagbarToggle<cr>
+    " F10
     " F11   Toggle Goyo
     " F12   Toggle ZoomWin
 
@@ -369,12 +369,20 @@ endfunction
       omap <leader><tab> <plug>(fzf-maps-o)
     endif
 
-    nnoremap <leader>j :!gulp test<CR>
+    " nnoremap <leader>j :!gulp test<CR>
     " <leader>t vim-rspec mappings
-    nnoremap <leader>t :call RunCurrentSpecFile()<CR>
-    nnoremap <leader>s :call RunNearestSpec()<CR>
-    nnoremap <leader>l :call RunLastSpec()<CR>
+    " nnoremap <leader>t :call RunCurrentSpecFile()<CR>
+    " nnoremap <leader>s :call RunNearestSpec()<CR>
+    " nnoremap <leader>l :call RunLastSpec()<CR>
     " nnoremap <Leader>a :call RunAllSpecs()<CR>
+
+    " <leader>t vim-test mappings
+    nnoremap <leader>s :TestNearest<CR>
+    nnoremap <leader>t :TestFile<CR>
+    nnoremap <leader>l :TestLast<CR>
+    nnoremap <leader>a :TestSuite<CR>
+    nnoremap <leader>g :TestVisit<CR>
+
     " <leader>y Yank content in OS's clipboard
     vnoremap <leader>y "*y
     " <leader>u
