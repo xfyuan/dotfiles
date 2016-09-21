@@ -1,6 +1,7 @@
 .DS_Store
 *.sw[nop]
 .bundle
+.byebug_history
 .env
 .tm_properties
 db/*.sqlite3
@@ -12,3 +13,5 @@ Procfile
 !tags/
 tmp/**/*
 !tmp/cache/.keep
+*.pyc
+/vendor/bundle

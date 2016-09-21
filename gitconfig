@@ -2,7 +2,7 @@
   templatedir = ~/.git_template
 [user]
   name = "Xiaofeng Yuan"
-  email = xfyuan@thoughtworks.com
+  email = yuan.xiaofeng@gmail.com
 [push]
   default = current
 [color]
@@ -32,6 +32,7 @@
   pr = !hub pull-request
   rename-branch = !sh -c 'old=$(git current-branch) && git branch -m $old $1 && git push origin --set-upstream $1 && git push origin --delete $old' -
   up = !git fetch origin && git rebase origin/master
+  dup = !git fetch origin && git rebase origin/dev
   # pup = !git fetch origin && git rebase origin/production
   publish = "!git push origin $(git current-branch)"
   unpublish = "!git push origin :$(git current-branch)"
@@ -49,7 +50,7 @@
   # Show the changes that were introduced by a merge
   merge-diff = "!git diff `git merge-span ... $1`"
 [core]
-  excludesfile = ~/.gitignore
+	excludesfile = /Users/xfyuan/.gitignore
   autocrlf = input
 [merge]
   ff = only
@@ -65,10 +66,4 @@
 [include]
   path = ~/.gitconfig.local
 [credential]
-	helper = osxkeychain
-[difftool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
+  helper = osxkeychain

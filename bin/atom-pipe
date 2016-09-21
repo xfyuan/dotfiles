@@ -1,0 +1,6 @@
+#!/bin/bash
+
+OUT="$(mktemp atom.XXXXXX)"
+
+cat > $OUT
+atom $OUT
