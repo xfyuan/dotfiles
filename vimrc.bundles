@@ -13,10 +13,9 @@ call plug#begin('~/.vim/bundle')
 " Appearance {{{
 " Dark
 Plug 'w0ng/vim-hybrid'
-Plug 'morhetz/gruvbox'
 
 " Light
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'google/vim-colorscheme-primary'
 Plug 'croaky/vim-colors-github'
 " Plug 'saaguero/vim-github-colorscheme'
 
@@ -78,34 +77,34 @@ Plug 'bling/vim-airline'
 " }}}
 
 " Core {{{
-if has('gui_running')
-  Plug 'ctrlpvim/ctrlp.vim'
-      let g:ctrlp_match_window = 'bottom,order:bbt,min:20,max:36'
-      let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-        \ --ignore .git
-        \ --ignore .svn
-        \ --ignore .DS_Store
-        \ --ignore vendor/bundle
-        \ --ignore bower_components
-        \ --ignore node_modules
-        \ --ignore "**/*.pyc"
-        \ -g ""'
-      let g:ctrlp_working_path_mode = 0
-      let g:ctrlp_custom_ignore = {
-          \ 'dir':  '\v[\/](\.git|\.hg|\.svn|bower_components|node_modules|vendor\/bundle)$',
-          \ 'file': '\.pyc$\|\.pyo$',
-          \ }
-      let g:ctrlp_open_multiple_files = '1jr'
-      let g:ctrlp_max_files = 0
-      let g:ctrlp_lazy_update = 50
-      let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
-  Plug 'felikz/ctrlp-py-matcher'
-  Plug 'mattn/ctrlp-register'
-  Plug 'mattn/ctrlp-mark'
-  Plug 'tacahiroy/ctrlp-funky'
-      let g:ctrlp_funky_syntax_highlight = 1
-endif
+" if has('gui_running')
+  " Plug 'ctrlpvim/ctrlp.vim'
+  "     let g:ctrlp_match_window = 'bottom,order:bbt,min:20,max:36'
+  "     let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+  "       \ --ignore .git
+  "       \ --ignore .svn
+  "       \ --ignore .DS_Store
+  "       \ --ignore vendor/bundle
+  "       \ --ignore bower_components
+  "       \ --ignore node_modules
+  "       \ --ignore "**/*.pyc"
+  "       \ -g ""'
+  "     let g:ctrlp_working_path_mode = 0
+  "     let g:ctrlp_custom_ignore = {
+  "         \ 'dir':  '\v[\/](\.git|\.hg|\.svn|bower_components|node_modules|vendor\/bundle)$',
+  "         \ 'file': '\.pyc$\|\.pyo$',
+  "         \ }
+  "     let g:ctrlp_open_multiple_files = '1jr'
+  "     let g:ctrlp_max_files = 0
+  "     let g:ctrlp_lazy_update = 50
+  "     let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+  "
+  " Plug 'felikz/ctrlp-py-matcher'
+  " Plug 'mattn/ctrlp-register'
+  " Plug 'mattn/ctrlp-mark'
+  " Plug 'tacahiroy/ctrlp-funky'
+  "     let g:ctrlp_funky_syntax_highlight = 1
+" endif
 
 Plug 'szw/vim-maximizer'
   let g:maximizer_default_mapping_key = '<F5>'
@@ -114,8 +113,10 @@ Plug 'matchit.zip'
 Plug 'tComment'
 Plug 'jiangmiao/auto-pairs'
 Plug 'will133/vim-dirdiff'
-Plug 'gabesoft/vim-ags'
-  nnoremap <C-y> :Ags <cword>
+Plug 'dyng/ctrlsf.vim'
+  nnoremap <C-e> :CtrlSF<CR>
+" Plug 'gabesoft/vim-ags'
+  " nnoremap <C-y> :Ags <cword>
 
 Plug 'kristijanhusak/vim-multiple-cursors'
     " Disable NeoComplete once start selecting multiple cursors
@@ -148,6 +149,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'majutsushi/tagbar'
   let g:tagbar_sort = 0
+  let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+        \ 'h:headings',
+        \ ],
+        \ 'sort' : 0
+        \ }
 
 Plug 'Lokaltog/vim-easymotion'
     " easymotion prefix
@@ -158,6 +166,7 @@ Plug 'Lokaltog/vim-easymotion'
 " gof opens the file manager at the directory of the file you are currently editing in Vim.
 " got opens the terminal at the directory of the file you are currently editing in Vim.
 Plug 'justinmk/vim-gtfo'
+Plug 'zerowidth/vim-copy-as-rtf'
 
 Plug 'scrooloose/nerdtree'
     " Make it colourful and pretty
@@ -200,8 +209,8 @@ Plug 'tpope/vim-projectionist'
 " Programming {{{
 Plug 'ervandew/supertab'
 Plug 'rizzatti/dash.vim'
-Plug 'editorconfig/editorconfig-vim'
-  let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+" Plug 'editorconfig/editorconfig-vim'
+  " let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 Plug 'scrooloose/syntastic'
     " let g:syntastic_check_on_open=1
@@ -340,6 +349,7 @@ Plug 'junegunn/gv.vim'
 
 " Markdown {{{
 Plug 'plasticboy/vim-markdown'
+Plug 'mzlogin/vim-markdown-toc'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
   let g:limelight_paragraph_span = 1

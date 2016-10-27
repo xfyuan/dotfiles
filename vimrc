@@ -620,7 +620,7 @@ autocmd! FileType markdown :call s:MarkdownDef()
 function! s:MarkdownDef()
     setlocal shiftwidth=2
     setlocal tabstop=2
-    setlocal spell
+    setlocal nospell
     setlocal wrap
 
     " Surround _ to _
