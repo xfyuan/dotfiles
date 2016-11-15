@@ -13,6 +13,7 @@ call plug#begin('~/.vim/bundle')
 " Appearance {{{
 " Dark
 Plug 'w0ng/vim-hybrid'
+Plug 'dracula/vim'
 
 " Light
 Plug 'google/vim-colorscheme-primary'
@@ -204,6 +205,8 @@ Plug 'tpope/vim-projectionist'
 " Plug 'tpope/vim-tbone'
 " Plug 'tpope/vim-dispatch'
 
+Plug 'rickhowe/diffchar.vim'
+Plug 'chrisbra/vim-diff-enhanced'
 " }}}
 
 " Programming {{{
@@ -261,7 +264,7 @@ Plug 'nelstrom/vim-textobj-rubyblock'      " ar | ir
 Plug 'osyo-manga/vim-textobj-multiblock'   " ab | ib
 Plug 'idbrii/textobj-word-column.vim'      " ac | ic
 Plug 'Julian/vim-textobj-variable-segment' " av | iv
-Plug 'bootleq/vim-textobj-rubysymbol'
+Plug 'bootleq/vim-textobj-rubysymbol'      " a: | i:
 " }}}
 
 " HTML/XML {{{
