@@ -14,10 +14,14 @@ call plug#begin('~/.vim/bundle')
 " Dark
 Plug 'w0ng/vim-hybrid'
 Plug 'dracula/vim'
+Plug 'sonph/onehalf'
+" Plug 'morhetz/gruvbox'
+"   let g:gruvbox_contrast_dark='hard'
+"   let g:gruvbox_contrast_light='hard'
 
 " Light
 Plug 'google/vim-colorscheme-primary'
-Plug 'croaky/vim-colors-github'
+" Plug 'croaky/vim-colors-github'
 " Plug 'saaguero/vim-github-colorscheme'
 
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable'  }
@@ -148,15 +152,15 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
 
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'majutsushi/tagbar'
-  let g:tagbar_sort = 0
-  let g:tagbar_type_markdown = {
-        \ 'ctagstype' : 'markdown',
-        \ 'kinds' : [
-        \ 'h:headings',
-        \ ],
-        \ 'sort' : 0
-        \ }
+" Plug 'majutsushi/tagbar'
+"   let g:tagbar_sort = 0
+"   let g:tagbar_type_markdown = {
+"         \ 'ctagstype' : 'markdown',
+"         \ 'kinds' : [
+"         \ 'h:headings',
+"         \ ],
+"         \ 'sort' : 0
+"         \ }
 
 Plug 'Lokaltog/vim-easymotion'
     " easymotion prefix
@@ -188,6 +192,7 @@ Plug 'scrooloose/nerdtree'
         \ '\.git', '\.hg', '\.svn', '\.sass-cache',
         \ '\.coverage$', '\.tmp$', '\.gitkeep$',
         \ '\.vcxproj', '\.bundle', '\.DS_Store$', '\tags$']
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jistr/vim-nerdtree-tabs'
     map <F3> <Plug>NERDTreeTabsToggle<CR>
     nnoremap <C-u> :NERDTreeFind<CR>
@@ -207,6 +212,12 @@ Plug 'tpope/vim-projectionist'
 
 Plug 'rickhowe/diffchar.vim'
 Plug 'chrisbra/vim-diff-enhanced'
+Plug 'will133/vim-dirdiff'
+Plug 'kshenoy/vim-signature'
+Plug 'dhruvasagar/vim-table-mode'
+  let g:table_mode_corner="|"
+Plug 'francoiscabrol/ranger.vim'
+  let g:ranger_map_keys = 0
 " }}}
 
 " Programming {{{
@@ -215,31 +226,32 @@ Plug 'rizzatti/dash.vim'
 " Plug 'editorconfig/editorconfig-vim'
   " let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-Plug 'scrooloose/syntastic'
-    " let g:syntastic_check_on_open=1
-    " let g:syntastic_enable_signs=1
-    let g:syntastic_enable_highlighting = 0
-    let g:syntastic_phpcs_conf = "--tab-width=4 --standard=PSR2"
-    let g:syntastic_javascript_checkers = ['jshint']
-
-    " manual syntastic check
-    " nnoremap <silent> <F7> :SyntasticCheck<CR>
-    " fancy symbols
-    let g:syntastic_error_symbol = '✗'
-    let g:syntastic_warning_symbol = '‽'
-    let g:syntastic_style_error_symbol = '❄'
-    let g:syntastic_style_warning_symbol = '❖'
-    " error window will be automatically closed
-    " let g:syntastic_auto_loc_list = 1
-    " populate syntastic errors in location list
-    " let g:syntastic_always_populate_loc_list = 1
-    " height of the location lists that syntastic opens
-    let g:syntastic_loc_list_height = 5
-    " automatic syntax checking
-    let g:syntastic_mode_map = {
-        \ 'mode': 'active',
-        \ 'active_filetypes': ['php', 'javascript', 'ruby', 'coffee'],
-        \ 'passive_filetypes': ['html', 'css', 'scss'] }
+Plug 'w0rp/ale'
+" Plug 'scrooloose/syntastic'
+"     " let g:syntastic_check_on_open=1
+"     " let g:syntastic_enable_signs=1
+"     let g:syntastic_enable_highlighting = 0
+"     let g:syntastic_phpcs_conf = "--tab-width=4 --standard=PSR2"
+"     let g:syntastic_javascript_checkers = ['jshint']
+"
+"     " manual syntastic check
+"     " nnoremap <silent> <F7> :SyntasticCheck<CR>
+"     " fancy symbols
+"     let g:syntastic_error_symbol = '✗'
+"     let g:syntastic_warning_symbol = '‽'
+"     let g:syntastic_style_error_symbol = '❄'
+"     let g:syntastic_style_warning_symbol = '❖'
+"     " error window will be automatically closed
+"     " let g:syntastic_auto_loc_list = 1
+"     " populate syntastic errors in location list
+"     " let g:syntastic_always_populate_loc_list = 1
+"     " height of the location lists that syntastic opens
+"     let g:syntastic_loc_list_height = 5
+"     " automatic syntax checking
+"     let g:syntastic_mode_map = {
+"         \ 'mode': 'active',
+"         \ 'active_filetypes': ['php', 'javascript', 'ruby', 'coffee'],
+"         \ 'passive_filetypes': ['html', 'css', 'scss'] }
 
 Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF' }
 Plug 'AndrewRadev/splitjoin.vim'
@@ -276,7 +288,6 @@ Plug 'mattn/emmet-vim'
 " }}}
 
 " Template Engines {{{
-Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
 Plug 'tpope/vim-haml', { 'for': 'haml' }
 Plug 'mustache/vim-mustache-handlebars', { 'for': 'html.handlebars' }
@@ -284,7 +295,9 @@ Plug 'honza/dockerfile.vim'
 " }}}
 
 " CSS {{{
-Plug 'gorodinskiy/vim-coloresque', { 'for': ['css', 'scss', 'less'] }
+  " make a  keyword issue: https://github.com/gko/vim-coloresque/issues/20
+" Plug 'gorodinskiy/vim-coloresque', { 'for': ['css', 'scss', 'less'] }
+Plug 'ap/vim-css-color', { 'for': ['css', 'scss', 'less'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss', 'less'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
@@ -316,7 +329,7 @@ Plug 'StanAngeloff/php.vim', { 'for': 'php' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'tpope/vim-rails',   { 'for': ['ruby', 'eruby']}
 " Plug 'tpope/vim-rake', { 'for': 'ruby' }
 " Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 Plug 'Keithbsmiley/rspec.vim', { 'for': 'ruby' }
