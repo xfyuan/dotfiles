@@ -12,7 +12,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(brew colored-man tmux tmuxinator git github git-extras git-flow docker rails bundler)
-plugins=(brew colored-man tmux tmuxinator git git-extras git-flow docker rails bundler composer)
+plugins=(brew colored-man tmux tmuxinator git gitfast git-extras docker bundler)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -26,6 +26,7 @@ path=(
     vendor/bin
     node_modules/.bin
     $HOME/.bin
+    $HOME/.yarn/bin
     $path
 )
 
@@ -38,6 +39,7 @@ path=(
 # else
 #   export EDITOR='mvim'
 # fi
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -54,7 +56,7 @@ path=(
 alias viv="vim ~/.vimrc"
 alias viz="vim ~/.zshrc.local"
 alias cl="clear"
-alias nv="nvim"
+alias bs="brew services"
 
 alias tmux="TERM=screen-256color-bce tmux"
 alias tk="tmux kill-session"
@@ -64,7 +66,7 @@ alias dp="docker-compose"
 alias dm="docker-machine"
 
 # dev env
-alias ctt="ctags -R --languages=ruby,coffee,less,sass --exclude=.git --exclude=log --exclude=tmp ."
+alias ct="ctags -R --languages=ruby,coffee,less,sass --exclude=.git --exclude=log --exclude=tmp ."
 # alias ctg="ctags -R --languages=ruby -f gems.tags  $(bundle list --paths)"
 
 # alias heroup="git push heroku master && heroku run rake db:migrate"
@@ -79,12 +81,14 @@ alias mydown="brew services stop mysql"
 # alias devup="mysql.server start && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k start"
 # alias devdown="mysql.server stop && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k stop"
 
-alias art="php artisan"
-alias art:s="art serve"
+alias gdup="brew services start mongodb@3.2 && brew services start redis && brew services start memcached && brew services start elasticsearch && brew services start postgresql"
+alias gddown="brew services stop mongodb@3.2 && brew services stop redis && brew services stop memcached && brew services stop elasticsearch && brew services stop postgresql"
+alias gduat="ssh ubuntu@106.75.137.138 -p 32754"
+alias gdsta="ssh ubuntu@54.223.54.134"
+alias gdprod="ssh -A ubuntu@54.222.214.121"
 
-# alias uu="vendor/bin/phpunit"
-# alias spec="vendor/bin/phpspec"
-# alias cc="vendor/bin/codecept"
+# alias art="php artisan"
+# alias art:s="art serve"
 
 alias sp="suspenders"
 
@@ -92,3 +96,6 @@ alias sp="suspenders"
 # eval "$(rbenv init - zsh --no-rehash)"
 eval "$(rbenv init -)"
 
+source ~/.bin/tmuxinator.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export PATH="/usr/local/opt/mongodb@3.2/bin:$PATH"
