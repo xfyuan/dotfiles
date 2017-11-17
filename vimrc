@@ -357,8 +357,15 @@ endfunction
   nnoremap <leader>b :Buffers<CR>
   nnoremap <leader>h :History<CR>
   nnoremap <leader>m :Marks<CR>
-  nnoremap <leader>bc :BCommits<CR>
-  " nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
+  " nnoremap <leader>bc :BCommits<CR>
+  nnoremap <silent> <Leader>ag :Ag! <C-R><C-W><CR>
+  command! -bang -nargs=* Ag
+    \ call fzf#vim#ag(<q-args>,
+    \                 <bang>0 ? fzf#vim#with_preview('up:30%')
+    \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+    \                 <bang>0)
+  nnoremap <silent> <Leader>at :let @"=&filetype \| Agt --<C-R>" <C-R><C-W><CR>
+  command! -nargs=+ -complete=file Agt call fzf#vim#ag_raw(<q-args>)
 
   imap <c-x><c-k> <plug>(fzf-complete-word)
   imap <c-x><c-f> <plug>(fzf-complete-path)
@@ -576,9 +583,9 @@ endfunction
 " Javascript Mappings {{{
 autocmd! FileType javascript :call s:JavascriptDef()
 " Format using Prettier
-autocmd FileType javascript set formatprg=prettier\ --single-quote\ --trailing-comma\ es5\ --stdin
-autocmd BufWritePre *.js :normal gggqG
-autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
+" autocmd FileType javascript set formatprg=prettier\ --single-quote\ --trailing-comma\ es5\ --stdin
+" autocmd BufWritePre *.js :normal gggqG
+" autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 function! s:JavascriptDef()
   setlocal shiftwidth=2
   setlocal tabstop=2
