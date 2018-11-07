@@ -81,11 +81,11 @@ alias mydown="brew services stop mysql"
 # alias devup="mysql.server start && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k start"
 # alias devdown="mysql.server stop && sudo /Applications/XAMPP/xamppfiles/bin/httpd -f /Applications/XAMPP/xamppfiles/etc/httpd.conf -k stop"
 
-alias gdup="brew services start mongodb@3.2 && brew services start redis && brew services start memcached && brew services start elasticsearch && brew services start postgresql"
-alias gddown="brew services stop mongodb@3.2 && brew services stop redis && brew services stop memcached && brew services stop elasticsearch && brew services stop postgresql"
-alias gduat="ssh ubuntu@106.75.137.138 -p 32754"
-alias gdsta="ssh ubuntu@54.223.54.134"
-alias gdprod="ssh -A ubuntu@54.222.214.121"
+# alias gdup="brew services start mongodb@3.2 && brew services start redis && brew services start memcached && brew services start elasticsearch && brew services start postgresql"
+# alias gddown="brew services stop mongodb@3.2 && brew services stop redis && brew services stop memcached && brew services stop elasticsearch && brew services stop postgresql"
+# alias gduat="ssh ubuntu@106.75.137.138 -p 32754"
+# alias gdsta="ssh ubuntu@54.223.54.134"
+# alias gdprod="ssh -A ubuntu@54.222.214.121"
 
 # alias art="php artisan"
 # alias art:s="art serve"
@@ -97,5 +97,6 @@ alias sp="suspenders"
 eval "$(rbenv init -)"
 
 source ~/.bin/tmuxinator.zsh
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-export PATH="/usr/local/opt/mongodb@3.2/bin:$PATH"
+# export PATH="/usr/local/opt/mongodb@3.2/bin:$PATH"
+# export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
