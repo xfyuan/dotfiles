@@ -63,7 +63,7 @@ set tags+=gems.tags
 set background=dark
 colorscheme hybrid
 " set guifont=Menlo\ Regular:h13
-set guifont=Source\ Code\ Pro\ Semibold:h14
+set guifont=Source\ Code\ Pro\ Semibold:h16
 
 " Make it obvious where 80 characters is
 set textwidth=80
@@ -361,7 +361,7 @@ endfunction
   nnoremap <silent> <Leader>ag :Ag! <C-R><C-W><CR>
   command! -bang -nargs=* Ag
     \ call fzf#vim#ag(<q-args>,
-    \                 <bang>0 ? fzf#vim#with_preview('up:30%')
+    \                 <bang>0 ? fzf#vim#with_preview('up:50%')
     \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
     \                 <bang>0)
   nnoremap <silent> <Leader>at :let @"=&filetype \| Agt --<C-R>" <C-R><C-W><CR>
