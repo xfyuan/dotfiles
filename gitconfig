@@ -32,7 +32,8 @@
   pr = !hub pull-request
   rename-branch = !sh -c 'old=$(git current-branch) && git branch -m $old $1 && git push origin --set-upstream $1 && git push origin --delete $old' -
   up = !git fetch origin && git rebase origin/master
-  dup = !git fetch origin && git rebase origin/dev
+  dup = !git fetch origin && git rebase origin/develop
+  # dup = !git fetch origin && git rebase origin/dev
   # pup = !git fetch origin && git rebase origin/production
   publish = "!git push origin $(git current-branch)"
   unpublish = "!git push origin :$(git current-branch)"
