@@ -111,15 +111,15 @@ endfunction
 
 " tabs and windows {{{
   " Switch between tab 1 ~ 9
-  for i in range(1, 9)
-      exec "nnoremap \\".i." ".i."gt"
-  endfor
+  " for i in range(1, 9)
+  "   exec "nnoremap \\".i." ".i."gt"
+  " endfor
 
-  nnoremap \( :tabprevious<cr>
-  nnoremap \) :tabnext<cr>
-  nnoremap \t :tab split<CR>
-  nnoremap \T :tabnew<CR>
-  nnoremap \w :tabclose<CR>
+  " nnoremap \( :tabprevious<cr>
+  " nnoremap \) :tabnext<cr>
+  " nnoremap \t :tab split<CR>
+  " nnoremap \T :tabnew<CR>
+  " nnoremap \w :tabclose<CR>
 
   " splitting
   set splitright
@@ -173,8 +173,8 @@ endfunction
   vnoremap <down> :m '>+1<CR>gv=gv
 
   " Move to prev/next buffer
-  nnoremap <left>  <ESC>:bN<CR>
-  nnoremap <right> <ESC>:bn<CR>
+  " nnoremap <left>  <ESC>:bN<CR>
+  " nnoremap <right> <ESC>:bn<CR>
 
   " press Backspace to toggle the current fold open/closed. However, if the cursor is not in a fold, move to the right
   nnoremap <silent> <BS> @=(foldlevel('.')?'za':"\<BS>")<CR>
@@ -219,6 +219,8 @@ endfunction
   inoremap ii =
   inoremap kk ->
   inoremap jk =>
+  inoremap vv <Bar>>
+  inoremap EE <-
   " <U>       Undo all latest changes on last changed line
   " <i>       Insert
   " <I>       Insert at beginning of line
@@ -343,16 +345,9 @@ endfunction
   "   nnoremap <buffer> ^ g^
   " endfunction
   " <leader>e Show yank list
-  " for ctrlp plugin
-  " nnoremap <leader>b :CtrlPBuffer<CR>
-  " nnoremap <leader>h :CtrlPMRU<CR>
-  " nnoremap <leader>e :CtrlPRegister<CR>
-  " nnoremap <leader>m :CtrlPMark<CR>
-  " nnoremap <leader>g :CtrlPTag<CR>
-  " nnoremap <leader>f :CtrlPFunky<Cr>
-  " nnoremap <Leader>u :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
   " for fzf plugin
   nnoremap <C-p> :GitFiles<CR>
+  nnoremap <C-o> :Files<CR>
   " nnoremap <leader>f :Files<CR>
   nnoremap <leader>b :Buffers<CR>
   nnoremap <leader>h :History<CR>
@@ -412,9 +407,6 @@ endfunction
   " <leader>g
   " <leader>h
   " <leader>j
-  " Ranger File Manager
-  nnoremap <leader>j :Ranger<CR>
-  nnoremap <leader>e :RangerWorkingDirectory<CR>
   " <leader>k
   nmap <leader>k <Plug>DashSearch
   " <leader>l
