@@ -221,6 +221,7 @@ endfunction
   inoremap jk =>
   inoremap vv <Bar>>
   inoremap EE <-
+  inoremap BB %
   " <U>       Undo all latest changes on last changed line
   " <i>       Insert
   " <I>       Insert at beginning of line
@@ -303,13 +304,13 @@ endfunction
   nnoremap <leader><leader> <c-^>
   " <Enter>   Insert New Line without going into insert mode
   nnoremap <Enter> o<ESC>
-  nnoremap tn :tnext<CR>
-  nnoremap tp :tprevious<CR>
+  " nnoremap tn :tnext<CR>
+  " nnoremap tp :tprevious<CR>
 " }}}
 
 " <leader>* {{{
   " <leader>1 add a '====' line above/after current line
-  " nnoremap <leader>1 :normal "lyy"lpwv$r=^"lyyk"lP<cr>
+  nnoremap <leader>1 :normal "lyy"lpwv$r=^"lyyk"lP<cr>
   " <leader>2
   " nnoremap <leader>2 :normal "lyy"lpwv$r-^"lyyk"lP<cr>
   " <leader>3
@@ -320,11 +321,11 @@ endfunction
   " Markdown headings
   " nnoremap <leader>11 m`yypVr=``
   " nnoremap <leader>22 m`yypVr-``
-  nnoremap <leader>11 m`^i# <esc>``2l
-  nnoremap <leader>22 m`^i## <esc>``3l
-  nnoremap <leader>33 m`^i### <esc>``4l
-  nnoremap <leader>44 m`^i#### <esc>``5l
-  nnoremap <leader>55 m`^i##### <esc>``6l
+  " nnoremap <leader>11 m`^i# <esc>``2l
+  " nnoremap <leader>22 m`^i## <esc>``3l
+  " nnoremap <leader>33 m`^i### <esc>``4l
+  " nnoremap <leader>44 m`^i#### <esc>``5l
+  " nnoremap <leader>55 m`^i##### <esc>``6l
   " <leader>6
   " <leader>7
   " <leader>8
@@ -348,7 +349,6 @@ endfunction
   " for fzf plugin
   nnoremap <C-p> :GitFiles<CR>
   nnoremap <C-o> :Files<CR>
-  " nnoremap <leader>f :Files<CR>
   nnoremap <leader>b :Buffers<CR>
   nnoremap <leader>h :History<CR>
   nnoremap <leader>m :Marks<CR>
