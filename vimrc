@@ -63,7 +63,7 @@ set tags+=gems.tags
 set background=dark
 colorscheme hybrid
 " set guifont=Menlo\ Regular:h13
-set guifont=Source\ Code\ Pro\ Semibold:h16
+set guifont=Source\ Code\ Pro\ Semibold:h18
 
 " Make it obvious where 80 characters is
 set textwidth=80
@@ -353,13 +353,15 @@ endfunction
   nnoremap <leader>h :History<CR>
   nnoremap <leader>m :Marks<CR>
   " nnoremap <leader>bc :BCommits<CR>
-  nnoremap <C-i> :Vista finder<CR>
   nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
-  command! -bang -nargs=* Ag
-    \ call fzf#vim#ag(<q-args>,
-    \                 <bang>0 ? fzf#vim#with_preview('up:50%')
-    \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-    \                 <bang>0)
+  nnoremap <silent> <Leader>rg :Rg <C-R><C-W><CR>
+  " command! -bang -nargs=? -complete=dir GitFiles
+  "   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+  " command! -bang -nargs=* Ag
+  "   \ call fzf#vim#ag(<q-args>,
+  "   \                 <bang>0 ? fzf#vim#with_preview('up:50%')
+  "   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  "   \                 <bang>0)
   " nnoremap <silent> <Leader>at :let @"=&filetype \| Agt --<C-R>" <C-R><C-W><CR>
   " command! -nargs=+ -complete=file Agt call fzf#vim#ag_raw(<q-args>)
 
@@ -562,6 +564,16 @@ function! s:RubyDef()
   " Correct typos
   iab elseif     elsif
   iab ~=         =~
+endfunction
+" }}}
+
+" Golang Mappings {{{
+autocmd! FileType go :call s:GolangDef()
+function! s:GolangDef()
+  setlocal noexpandtab
+  setlocal shiftwidth=4
+  setlocal softtabstop=4
+  setlocal tabstop=4
 endfunction
 " }}}
 

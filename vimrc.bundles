@@ -12,18 +12,36 @@ call plug#begin('~/.vim/bundle')
 " Appearance {{{
 " Dark
 Plug 'w0ng/vim-hybrid'
-Plug 'nanotech/jellybeans.vim'
+" Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'kristijanhusak/vim-hybrid-material'
 " Plug 'romainl/Apprentice'
 " Plug 'connorholyday/vim-snazzy'
-" Plug 'KeitaNakamura/neodark.vim'
+
+" True Color
+Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/vim-color-forest-night'
+Plug 'joshdick/onedark.vim'
+" Plug 'jacoborus/tender.vim'
+" Plug 'ayu-theme/ayu-vim'
+"   let ayucolor="mirage"
+" Plug 'hzchirs/vim-material'
+  " let g:material_style='oceanic'
+" Plug 'rakr/vim-two-firewatch'
+" Plug 'carakan/new-railscasts-theme'
 
 " Light
 " Plug 'google/vim-colorscheme-primary'
-" Plug 'croaky/vim-colors-github'
-" Plug 'saaguero/vim-github-colorscheme'
+Plug 'cormacrelf/vim-colors-github'
 
 Plug 'Yggdroot/indentLine'
+
+" Plug 'ryanoasis/vim-devicons'
+"   let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+"   let g:DevIconsEnableFoldersOpenClose = 1
+"   let g:DevIconsEnableFolderExtensionPatternMatching = 1
+"
+"   let g:DevIconsDefaultFolderOpenSymbol=''
+"   let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol=''
 
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-airline'
@@ -47,6 +65,7 @@ Plug 'bling/vim-airline'
 Plug 'yianwillis/vimcdoc'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
+  let g:fzf_preview_window = 'right:60%'
 
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
@@ -184,12 +203,24 @@ Plug 'Shougo/neosnippet.vim'
   xmap <C-j>     <Plug>(neosnippet_expand_target)
 Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF' }
 Plug 'chr4/nginx.vim'
-Plug 'liuchengxu/vista.vim'
-  let g:vista_fzf_preview = ['right:60%']
+" Plug 'liuchengxu/vista.vim'
+"   let g:vista_fzf_preview = ['right:60%']
 " }}}
 
 " COC Setting {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " if hidden is not set, TextEdit might fail.
+  set hidden
+  " Better display for messages
+  set cmdheight=2
+  " Smaller updatetime for CursorHold & CursorHoldI
+  set updatetime=300
+  " don't give |ins-completion-menu| messages.
+  set shortmess+=c
+  " always show signcolumns
+  set signcolumn=yes
+
+  let g:go_def_mapping_enabled = 0
   let g:coc_global_extensions =["coc-json", "coc-html", "coc-css", "coc-elixir", "coc-solargraph", "coc-lists", "coc-tailwindcss", "coc-vetur", "coc-highlight", "coc-prettier", "coc-snippets", "coc-eslint"]
   " You will have bad experience for diagnostic messages when it's default 4000.
   set updatetime=500
@@ -210,26 +241,26 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
 
-  " Use `[g` and `]g` to navigate diagnostics
-  " nmap <silent> [g <Plug>(coc-diagnostic-prev)
-  " nmap <silent> ]g <Plug>(coc-diagnostic-next)
+  " Use `[c` and `]c` to navigate diagnostics
+  nmap <silent> [c <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
   " Remap keys for gotos
   nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
   nmap <silent> gr <Plug>(coc-references)
-  " nmap <silent> gy <Plug>(coc-type-definition)
-  " nmap <silent> gi <Plug>(coc-implementation)
 
   " Use K to show documentation in preview window
-  nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-  function! s:show_documentation()
-    if &filetype == 'vim'
-      execute 'h '.expand('<cword>')
-    else
-      call CocAction('doHover')
-    endif
-  endfunction
+  " nnoremap <silent> K :call <SID>show_documentation()<CR>
+  "
+  " function! s:show_documentation()
+  "   if &filetype == 'vim'
+  "     execute 'h '.expand('<cword>')
+  "   else
+  "     call CocAction('doHover')
+  "   endif
+  " endfunction
 
   " Highlight symbol under cursor on CursorHold
   autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -246,25 +277,42 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
   " Add status line support, for integration with other plugin, checkout `:h coc-status`
   set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+  " Show all diagnostics
+  nnoremap <silent> <space>na  :<C-u>CocList diagnostics<cr>
+  " Manage extensions
+  nnoremap <silent> <space>ne  :<C-u>CocList extensions<cr>
+  " Show commands
+  nnoremap <silent> <space>nc  :<C-u>CocList commands<cr>
+  " Find symbol of current document
+  nnoremap <silent> <space>no  :<C-u>CocList outline<cr>
+  " Search workspace symbols
+  nnoremap <silent> <space>ns  :<C-u>CocList -I symbols<cr>
+  " Do default action for next item.
+  nnoremap <silent> <space>nj  :<C-u>CocNext<CR>
+  " Do default action for previous item.
+  nnoremap <silent> <space>nk  :<C-u>CocPrev<CR>
+  " Resume latest coc list
+  nnoremap <silent> <space>np  :<C-u>CocListResume<CR>
+
   " Using CocList
   " Show all coc lists
-  nnoremap <silent> ma  :<C-u>CocList<cr>
-  " Show diagnostics
-  nnoremap <silent> md  :<C-u>CocList diagnostics<cr>
-  " Manage extensions
-  nnoremap <silent> me  :<C-u>CocList extensions<cr>
-  " Show commands
-  nnoremap <silent> mc  :<C-u>CocList commands<cr>
-  " Find symbol of current document
-  nnoremap <silent> mo  :<C-u>CocList outline<cr>
-  " Search workspace symbols
-  nnoremap <silent> ms  :<C-u>CocList -I symbols<cr>
-  " Do default action for next item.
-  nnoremap <silent> mj  :<C-u>CocNext<CR>
-  " Do default action for previous item.
-  nnoremap <silent> mk  :<C-u>CocPrev<CR>
-  " Resume latest coc list
-  nnoremap <silent> mp  :<C-u>CocListResume<CR>
+  " nnoremap <silent> ma  :<C-u>CocList<cr>
+  " " Show diagnostics
+  " nnoremap <silent> md  :<C-u>CocList diagnostics<cr>
+  " " Manage extensions
+  " nnoremap <silent> me  :<C-u>CocList extensions<cr>
+  " " Show commands
+  " nnoremap <silent> mc  :<C-u>CocList commands<cr>
+  " " Find symbol of current document
+  " nnoremap <silent> mo  :<C-u>CocList outline<cr>
+  " " Search workspace symbols
+  " nnoremap <silent> ms  :<C-u>CocList -I symbols<cr>
+  " " Do default action for next item.
+  " nnoremap <silent> mj  :<C-u>CocNext<CR>
+  " " Do default action for previous item.
+  " nnoremap <silent> mk  :<C-u>CocPrev<CR>
+  " " Resume latest coc list
+  " nnoremap <silent> mp  :<C-u>CocListResume<CR>
 " }}}
 
 " Text Objects {{{
@@ -337,7 +385,7 @@ Plug 'tpope/vim-endwise'
 " Plug 'tpope/vim-projectionist'
 " Plug 'tpope/vim-rake'
 Plug 'tpope/vim-rails'
-Plug 'janko-m/vim-test', { 'for': ['ruby', 'elixir'] }
+Plug 'janko-m/vim-test', { 'for': ['ruby', 'elixir', 'go'] }
   let test#strategy = 'basic'
   " if exists('$TMUX')
   "   let test#strategy = 'vtr'
@@ -357,6 +405,26 @@ Plug 'slashmili/alchemist.vim', { 'for': ['ex', 'exs', 'eex'] }
 
 " Golang {{{
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go'
+  " Run goimports along gofmt on each save
+  let g:go_fmt_command = "goimports"
+  " Automatically get signature/type info for object under cursor
+  let g:go_auto_type_info = 1
+
+  let g:go_auto_sameids = 1
+  let g:go_auto_type_info = 1
+  let g:go_def_mapping_enabled = 0
+
+  " Highlighting config
+  let g:go_highlight_build_constraints = 1
+  let g:go_highlight_extra_types = 1
+  let g:go_highlight_fields = 1
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_structs = 1
+  let g:go_highlight_types = 1
+  let g:go_highlight_function_calls = 1
 " }}}
 
 " Git {{{

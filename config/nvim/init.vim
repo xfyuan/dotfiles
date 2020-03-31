@@ -2,6 +2,13 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
 
+if (has("termguicolors"))
+  set termguicolors
+  colorscheme forest-night
+endif
+
+set inccommand=nosplit
+
 tnoremap jj <C-\><C-n>
 
 " FZF Floating Window {{{
