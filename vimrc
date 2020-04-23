@@ -61,7 +61,7 @@ set tags+=gems.tags
 
 " Color scheme
 set background=dark
-colorscheme hybrid
+colorscheme forest-night
 " set guifont=Menlo\ Regular:h13
 set guifont=Source\ Code\ Pro\ Semibold:h18
 
@@ -115,11 +115,12 @@ endfunction
   "   exec "nnoremap \\".i." ".i."gt"
   " endfor
 
+  nnoremap \j :tabprevious<cr>
   " nnoremap \( :tabprevious<cr>
   " nnoremap \) :tabnext<cr>
   " nnoremap \t :tab split<CR>
   " nnoremap \T :tabnew<CR>
-  " nnoremap \w :tabclose<CR>
+  nnoremap \w :tabclose<CR>
 
   " splitting
   set splitright
@@ -162,8 +163,8 @@ endfunction
 
 " Special keys {{{
   " Use <Tab> and <S-Tab> to indent
-  nnoremap <tab>    %
-  vnoremap <s-tab>  %
+  " nnoremap <tab>    %
+  " vnoremap <s-tab>  %
 
   " Move a line of text using <up><down>
   " http://vim.wikia.com/wiki/Moving_lines_up_or_down
@@ -336,7 +337,7 @@ endfunction
   " <leader>=
   " <leader>q Quick Quit without save
   nnoremap <leader>q :q!<CR>
-  " <leader>w vim-choosewin
+  " <leader>w
   " nnoremap <leader>W :call ToggleWrap()<CR>
   " function! ToggleWrap()
   "   nnoremap <buffer> j gj
@@ -346,46 +347,11 @@ endfunction
   "   nnoremap <buffer> ^ g^
   " endfunction
   " <leader>e Show yank list
-  " for fzf plugin
-  nnoremap <C-p> :GitFiles<CR>
-  nnoremap <C-o> :Files<CR>
-  nnoremap <leader>b :Buffers<CR>
-  nnoremap <leader>h :History<CR>
-  nnoremap <leader>m :Marks<CR>
-  " nnoremap <leader>bc :BCommits<CR>
-  nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
-  nnoremap <silent> <Leader>rg :Rg <C-R><C-W><CR>
-  " command! -bang -nargs=? -complete=dir GitFiles
-  "   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-  " command! -bang -nargs=* Ag
-  "   \ call fzf#vim#ag(<q-args>,
-  "   \                 <bang>0 ? fzf#vim#with_preview('up:50%')
-  "   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  "   \                 <bang>0)
-  " nnoremap <silent> <Leader>at :let @"=&filetype \| Agt --<C-R>" <C-R><C-W><CR>
-  " command! -nargs=+ -complete=file Agt call fzf#vim#ag_raw(<q-args>)
-
-  " imap <c-x><c-k> <plug>(fzf-complete-word)
-  " imap <c-x><c-f> <plug>(fzf-complete-path)
-  " imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-  " imap <c-x><c-l> <plug>(fzf-complete-line)
-  "
-  " nmap <leader><tab> <plug>(fzf-maps-n)
-  " xmap <leader><tab> <plug>(fzf-maps-x)
-  " omap <leader><tab> <plug>(fzf-maps-o)
-
-  " <leader>t vim-test mappings
-  nnoremap <leader>s :TestNearest<CR>
-  nnoremap <leader>t :TestFile<CR>
-  nnoremap <leader>l :TestLast<CR>
-  " nnoremap <leader>a :TestSuite<CR>
-  " nnoremap <leader>g :TestVisit<CR>
-
-  " <leader>y Yank content in OS's clipboard
-  vnoremap <leader>y "*y
   " <leader>u
   " <leader>i
   " <leader>o
+  " <leader>y Yank content in OS's clipboard
+  vnoremap <leader>y "*y
   " <leader>p Paste content from OS's clipboard
   nnoremap <leader>p "*p
   " <leader>a
@@ -396,38 +362,44 @@ endfunction
   " nnoremap <leader>sa zg
   " nnoremap <leader>s? z=
   " <leader>S Clear trailing whitespace
-  nnoremap <leader>S :%s/\s\+$//ge<CR>:nohl<CR>
-  " <leader>d Close buffer with leave window intact
-  nnoremap <leader>d :BD<CR>
-  " <leader>D Close buffer
-  nnoremap <leader>D :bd<CR>
+  " nnoremap <leader>S :%s/\s\+$//ge<CR>:nohl<CR>
+  " <leader>d
+  " <leader>D
   " <leader>f Format file
-  nnoremap <leader>fj :%!js-beautify -s=2 -q -f -<CR>
-  nnoremap <leader>fs :%!css-beautify -s=2 -q -L -N -f -<CR>
-  nnoremap <leader>fh :%!html-beautify -s=2 -q -f -<CR>
+  " nnoremap <leader>fj :%!js-beautify -s=2 -q -f -<CR>
+  " nnoremap <leader>fs :%!css-beautify -s=2 -q -L -N -f -<CR>
+  " nnoremap <leader>fh :%!html-beautify -s=2 -q -f -<CR>
   " <leader>F Format file
-  nnoremap <leader>F gg=G''
+  " nnoremap <leader>F gg=G''
   " <leader>g
   " <leader>h
   " <leader>j
   " <leader>k
-  nmap <leader>k <Plug>DashSearch
   " <leader>l
   " <leader>L Reduce a sequence of blank lines into a single line
-  nnoremap <leader>L GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
+  " nnoremap <leader>L GoZ<Esc>:g/^[ <Tab>]*$/.,/[^ <Tab>]/-j<CR>Gdd
   " <leader>z
   " <leader>x
   " <leader>c
 
   " <leader>v Select the just pasted text
-  nnoremap <leader>v V`]
+  " nnoremap <leader>v V`]
   " <leader>b
   " <leader>n
+  " use <leader>n to toggle the line number display
+  function! g:ToggleNuMode()
+    if &rnu == 1
+      set nornu   " turn off relative number
+    else
+      set rnu
+    endif
+  endfunction
+  nnoremap <leader>n :call g:ToggleNuMode()<CR>
   " <leader>m
   " <leader>M Remove ^M
-  nnoremap <leader>M mmHmt:%s/<C-V><CR>//ge<CR>'tzt'm
+  " nnoremap <leader>M mmHmt:%s/<C-V><CR>//ge<CR>'tzt'm
   " <leader>, Run Eval
-  noremap <leader>; m`A;<Esc>``
+  " noremap <leader>; m`A;<Esc>``
 " }}}
 
 " <C-*> (Normal Mode) {{{
@@ -548,8 +520,8 @@ autocmd! FileType neosnippet,snippet set noexpandtab
 " Ruby Mappings {{{
 autocmd! FileType ruby,eruby,rdoc :call s:RubyDef()
 function! s:RubyDef()
-  setlocal shiftwidth=2
-  setlocal tabstop=2
+  " setlocal shiftwidth=2
+  " setlocal tabstop=2
 
   " Surround % to %
   let b:surround_37 = "<% \r %>"
@@ -570,38 +542,40 @@ endfunction
 " Golang Mappings {{{
 autocmd! FileType go :call s:GolangDef()
 function! s:GolangDef()
-  setlocal noexpandtab
-  setlocal shiftwidth=4
-  setlocal softtabstop=4
-  setlocal tabstop=4
+  " setlocal noexpandtab
+  " setlocal shiftwidth=4
+  " setlocal softtabstop=4
+  " setlocal tabstop=4
+  command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
 endfunction
 " }}}
 
 " CoffeeScript Mappings {{{
-autocmd! FileType coffee :call s:CoffeeDef()
-function! s:CoffeeDef()
-  setlocal shiftwidth=2
-  setlocal tabstop=2
-endfunction
+" autocmd! FileType coffee :call s:CoffeeDef()
+" function! s:CoffeeDef()
+  " setlocal shiftwidth=2
+  " setlocal tabstop=2
+" endfunction
 " }}}
 
 " Javascript Mappings {{{
-autocmd! FileType javascript :call s:JavascriptDef()
+" autocmd! FileType javascript :call s:JavascriptDef()
 " Format using Prettier
 " autocmd FileType javascript set formatprg=prettier\ --single-quote\ --trailing-comma\ es5\ --stdin
 " autocmd BufWritePre *.js :normal gggqG
 " autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
-function! s:JavascriptDef()
-  setlocal shiftwidth=2
-  setlocal tabstop=2
-endfunction
+" function! s:JavascriptDef()
+  " setlocal shiftwidth=2
+  " setlocal tabstop=2
+" endfunction
 " }}}
 
 " Html/Xml Mappings {{{
 autocmd! FileType xhtml,html,slim,jade,xml,yaml :call s:WebDef()
 function! s:WebDef()
-  setlocal shiftwidth=2
-  setlocal tabstop=2
+  " setlocal shiftwidth=2
+  " setlocal tabstop=2
   setlocal foldmethod=indent
   setlocal foldlevel=1
 
@@ -630,8 +604,8 @@ endfunction
 " Markdown Mappings {{{
 autocmd! FileType markdown :call s:MarkdownDef()
 function! s:MarkdownDef()
-  setlocal shiftwidth=2
-  setlocal tabstop=2
+  " setlocal shiftwidth=2
+  " setlocal tabstop=2
   setlocal nospell
   setlocal wrap
 
@@ -683,6 +657,61 @@ augroup vimrc
   autocmd!
   au FileType ruby,coffee IndentLinesEnable
 augroup END
+" }}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Defx Explorer {{{
+" Set appearance
+call defx#custom#option('_', {
+      \ 'winwidth': 30,
+      \ 'split': 'vertical',
+      \ 'direction': 'topleft',
+      \ 'show_ignored_files': 0,
+      \ 'buffer_name': '',
+      \ 'toggle': 1,
+      \ 'columns': 'mark:indent:git:icon:filename',
+      \ 'resume': 1
+      \ })
+
+" nnoremap <silent> <C-d>
+" \ :<C-u>Defx -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
+nnoremap <silent> <C-d>
+\ :<C-u>Defx -resume -buffer-name=tab`tabpagenr()` -search=`expand('%:p')`<CR>
+
+autocmd FileType defx call s:defx_mappings()
+function! s:defx_mappings() abort
+  setlocal conceallevel=2
+  setlocal concealcursor=inc
+  nnoremap <silent><buffer><expr> o  <SID>defx_toggle_tree()                    " 打开或者关闭文件夹，文件
+  nnoremap <silent><buffer><expr> O  defx#do_action('open_tree_recursive')
+  nnoremap <silent><buffer><expr> s  defx#do_action('open', 'botright vsplit')
+  nnoremap <nowait><silent><buffer><expr> d defx#do_action('remove')
+  nnoremap <nowait><silent><buffer><expr> c defx#do_action('copy')
+  nnoremap <silent><buffer><expr> x  defx#do_action('move')
+  nnoremap <silent><buffer><expr> p  defx#do_action('paste')
+  nnoremap <silent><buffer><expr> r  defx#do_action('rename')
+  nnoremap <silent><buffer><expr> H  defx#do_action('toggle_ignored_files')     " 显示隐藏文件
+  nnoremap <silent><buffer><expr> R  defx#do_action('redraw')
+  nnoremap <silent><buffer><expr> N  defx#do_action('new_multiple_files')
+  nnoremap <silent><buffer><expr> U  defx#do_action('multi', [['cd', '..'], 'change_vim_cwd'])    "到上一级目录
+  nnoremap <silent><buffer><expr> C defx#is_directory() ? defx#do_action('multi', ['open', 'change_vim_cwd']) : 'C'     "进入目录
+  nnoremap <silent><buffer><expr> yy defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> q  defx#do_action('quit')
+  " nnoremap <silent><buffer><expr> X  defx#do_action('execute_system')
+  " nnoremap <silent><buffer><expr> *  defx#do_action('toggle_select_all')
+  nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
+  nnoremap <silent><buffer><expr> j  line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> k  line('.') == 1 ? 'G' : 'k'
+  nnoremap <silent><buffer><expr> <C-g>  defx#do_action('print')
+endfunction
+
+function! s:defx_toggle_tree() abort
+    " Open current file, or toggle directory expand/collapse
+    if defx#is_directory()
+        return defx#do_action('open_or_close_tree')
+    endif
+    return defx#do_action('multi', ['drop'])
+endfunction
 " }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
