@@ -12,13 +12,13 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(brew colored-man tmux tmuxinator git github git-extras git-flow docker rails bundler)
-plugins=(brew colored-man tmux tmuxinator git gitfast git-extras docker bundler)
+plugins=(brew colored-man tmux tmuxinator git gitfast git-extras docker bundler z)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 path=(
@@ -53,27 +53,38 @@ export EDITOR='vim'
 # For a full list of active aliases, run `alias`.
 #
 # aliases
-alias viv="vim ~/.vimrc"
-alias viz="vim ~/.zshrc.local"
-alias cl="clear"
+alias viv="nvim ~/.vimrc"
+alias viz="nvim ~/.zshrc.local"
 alias bs="brew services"
+alias ee="exa -l"
 
 alias tmux="TERM=screen-256color-bce tmux"
 alias tk="tmux kill-session"
-alias hd="homestead"
 alias re="rbenv"
+alias dk="docker"
 alias dp="docker-compose"
-alias dm="docker-machine"
+# alias dm="docker-machine"
+alias aa="asciinema"
+alias ar="asciinema rec"
+alias af="asdf"
+alias yg="you-get -x 127.0.0.1:1087"
+if type nvim > /dev/null 2>&1; then
+  alias vi="nvim"
+fi
+# alias art="php artisan"
+# alias art:s="art serve"
+# alias hd="homestead"
+# alias sp="suspenders"
 
 # dev env
-alias ct="ctags -R --languages=ruby,coffee,less,sass --exclude=.git --exclude=log --exclude=tmp ."
+# alias ct="ctags -R --languages=ruby,coffee,less,sass --exclude=.git --exclude=log --exclude=tmp ."
 # alias ctg="ctags -R --languages=ruby -f gems.tags  $(bundle list --paths)"
 
 # alias heroup="git push heroku master && heroku run rake db:migrate"
-alias pgup="postgres -D /usr/local/var/postgres"
-alias pgdown="brew services stop postgresql"
-alias myup="brew services start mysql"
-alias mydown="brew services stop mysql"
+# alias pgup="postgres -D /usr/local/var/postgres"
+# alias pgdown="brew services stop postgresql"
+# alias myup="brew services start mysql"
+# alias mydown="brew services stop mysql"
 
 # alias gcup="cd ~/work/tw-projects/livetext/gcbase && docker-machine start livetext && docker-compose up -d"
 # alias gcdown="cd ~/work/tw-projects/livetext/gcbase && docker-compose stop && docker-machine stop livetext"
@@ -87,16 +98,41 @@ alias mydown="brew services stop mysql"
 # alias gdsta="ssh ubuntu@54.223.54.134"
 # alias gdprod="ssh -A ubuntu@54.222.214.121"
 
-# alias art="php artisan"
-# alias art:s="art serve"
-
-alias sp="suspenders"
-
 # export PATH="$HOME/.rbenv/shims:$PATH"
 # eval "$(rbenv init - zsh --no-rehash)"
 eval "$(rbenv init -)"
 
 source ~/.bin/tmuxinator.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 # export PATH="/usr/local/opt/mongodb@3.2/bin:$PATH"
 # export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/Users/xfyuan/works/pact/bin:$PATH"
+
+# Homebrew Bottles源的更换
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+
+export FZF_DEFAULT_OPTS="--layout=reverse --cycle"
+
+unalias z 2> /dev/null
+z() {
+  [ $# -gt 0 ] && _z "$*" && return
+  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+}
+
+. "/Users/xfyuan/.acme.sh/acme.sh.env"
+. $HOME/.asdf/asdf.sh
+fpath=(/Users/xfyuan/.asdf/completions /Users/xfyuan/.oh-my-zsh/plugins/z /Users/xfyuan/.oh-my-zsh/plugins/bundler /Users/xfyuan/.oh-my-zsh/plugins/docker /Users/xfyuan/.oh-my-zsh/plugins/git-extras /Users/xfyuan/.oh-my-zsh/plugins/gitfast /Users/xfyuan/.oh-my-zsh/plugins/git /Users/xfyuan/.oh-my-zsh/plugins/tmuxinator /Users/xfyuan/.oh-my-zsh/plugins/tmux /Users/xfyuan/.oh-my-zsh/plugins/brew /Users/xfyuan/.oh-my-zsh/functions /Users/xfyuan/.oh-my-zsh/completions /usr/local/share/zsh/site-functions /usr/share/zsh/site-functions /usr/share/zsh/5.3/functions)
+
+autoload -Uz compinit && compinit
+
+# Golang
+export GOPATH="${HOME}/works/golang"
+GOBIN="$GOPATH/bin"
+PATH=$PATH:$GOBIN
+export GO111MODULE=on
+export GOPROXY='https://goproxy.io'
+export GOPRIVATE='*.sudiyi.cn'
+export GOSUMDB='off'
+export GOBIN
