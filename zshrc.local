@@ -12,7 +12,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(brew colored-man tmux tmuxinator git github git-extras git-flow docker rails bundler)
-plugins=(brew colored-man tmux tmuxinator git gitfast git-extras docker bundler z)
+plugins=(brew tmux tmuxinator git gitfast git-extras docker bundler z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -39,7 +39,7 @@ path=(
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -56,7 +56,9 @@ export EDITOR='vim'
 alias viv="nvim ~/.vimrc"
 alias viz="nvim ~/.zshrc.local"
 alias bs="brew services"
-alias ee="exa -l"
+alias ee="exa --icons -l"
+alias ea="exa --icons -l -a"
+alias et="exa -T"
 
 alias tmux="TERM=screen-256color-bce tmux"
 alias tk="tmux kill-session"
@@ -107,13 +109,12 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # export PATH="/usr/local/opt/mongodb@3.2/bin:$PATH"
 # export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH="/Users/xfyuan/works/pact/bin:$PATH"
 
 # Homebrew Bottles源的更换
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
-export FZF_DEFAULT_OPTS="--layout=reverse --cycle"
+export FZF_DEFAULT_OPTS="--layout=reverse"
 
 unalias z 2> /dev/null
 z() {
@@ -121,18 +122,16 @@ z() {
   cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
 }
 
-. "/Users/xfyuan/.acme.sh/acme.sh.env"
+# . "/Users/xfyuan/.acme.sh/acme.sh.env"
 . $HOME/.asdf/asdf.sh
-fpath=(/Users/xfyuan/.asdf/completions /Users/xfyuan/.oh-my-zsh/plugins/z /Users/xfyuan/.oh-my-zsh/plugins/bundler /Users/xfyuan/.oh-my-zsh/plugins/docker /Users/xfyuan/.oh-my-zsh/plugins/git-extras /Users/xfyuan/.oh-my-zsh/plugins/gitfast /Users/xfyuan/.oh-my-zsh/plugins/git /Users/xfyuan/.oh-my-zsh/plugins/tmuxinator /Users/xfyuan/.oh-my-zsh/plugins/tmux /Users/xfyuan/.oh-my-zsh/plugins/brew /Users/xfyuan/.oh-my-zsh/functions /Users/xfyuan/.oh-my-zsh/completions /usr/local/share/zsh/site-functions /usr/share/zsh/site-functions /usr/share/zsh/5.3/functions)
-
-autoload -Uz compinit && compinit
 
 # Golang
-export GOPATH="${HOME}/works/golang"
-GOBIN="$GOPATH/bin"
-PATH=$PATH:$GOBIN
+export PATH="$PATH:$(go env GOPATH)/bin"
+# export GOPATH="${HOME}/works/golang"
+# GOBIN="$GOPATH/bin"
+# PATH=$PATH:$GOBIN
 export GO111MODULE=on
-export GOPROXY='https://goproxy.io'
+export GOPROXY=https://goproxy.cn
 export GOPRIVATE='*.sudiyi.cn'
 export GOSUMDB='off'
-export GOBIN
+# export GOBIN

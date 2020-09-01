@@ -24,6 +24,7 @@ set undodir=~/.vim/tmp/undo//     " undo files
 set undofile
 set undolevels=1000         "maximum number of changes that can be undone
 set undoreload=10000        "maximum number lines to save for undo on a buffer reload
+set mouse=a
 
 " Encoding
 set enc=utf-8
@@ -63,7 +64,8 @@ set tags+=gems.tags
 set background=dark
 colorscheme forest-night
 " set guifont=Menlo\ Regular:h13
-set guifont=Source\ Code\ Pro\ Semibold:h18
+" set guifont=Source\ Code\ Pro\ Semibold:h18
+set guifont=SF\ Mono\ Medium:h18
 
 " Make it obvious where 80 characters is
 set textwidth=80
@@ -143,7 +145,7 @@ endfunction
   " inoremap <F4> <ESC>:TagbarToggle<cr>
   " F5    Toggle Tagbar
   " F6    Toggle Paste mode
-  set pastetoggle=<F6>
+  " set pastetoggle=<F6>
   " F7    Tigger Syntastic manual check
   " F8
   nnoremap <silent> <F8> :call DiffToggle()<CR>
@@ -165,20 +167,21 @@ endfunction
   " Use <Tab> and <S-Tab> to indent
   " nnoremap <tab>    %
   " vnoremap <s-tab>  %
+  nnoremap <silent> <BS> %
 
   " Move a line of text using <up><down>
   " http://vim.wikia.com/wiki/Moving_lines_up_or_down
-  nnoremap <up>   :m .-2<CR>==
-  nnoremap <down> :m .+1<CR>==
-  vnoremap <up>   :m '<-2<CR>gv=gv
-  vnoremap <down> :m '>+1<CR>gv=gv
+  " nnoremap <up>   :m .-2<CR>==
+  " nnoremap <down> :m .+1<CR>==
+  " vnoremap <up>   :m '<-2<CR>gv=gv
+  " vnoremap <down> :m '>+1<CR>gv=gv
 
   " Move to prev/next buffer
   " nnoremap <left>  <ESC>:bN<CR>
   " nnoremap <right> <ESC>:bn<CR>
 
   " press Backspace to toggle the current fold open/closed. However, if the cursor is not in a fold, move to the right
-  nnoremap <silent> <BS> @=(foldlevel('.')?'za':"\<BS>")<CR>
+  " nnoremap <silent> <BS> @=(foldlevel('.')?'za':"\<BS>")<CR>
 " }}}
 
 " Characters (Normal Mode) {{{
@@ -661,6 +664,7 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Defx Explorer {{{
+if has('nvim')
 " Set appearance
 call defx#custom#option('_', {
       \ 'winwidth': 30,
@@ -668,20 +672,34 @@ call defx#custom#option('_', {
       \ 'direction': 'topleft',
       \ 'show_ignored_files': 0,
       \ 'buffer_name': '',
+      \ 'floating_preview': 1,
+      \ 'vertical_preview': 1,
+      \ 'preview_height': 20,
       \ 'toggle': 1,
       \ 'columns': 'mark:indent:git:icon:filename',
+      \ 'root_marker': ' ',
       \ 'resume': 1
       \ })
 
 " nnoremap <silent> <C-d>
 " \ :<C-u>Defx -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
-nnoremap <silent> <C-d>
+nnoremap <silent> <C-u>
 \ :<C-u>Defx -resume -buffer-name=tab`tabpagenr()` -search=`expand('%:p')`<CR>
 
-autocmd FileType defx call s:defx_mappings()
+augroup user_plugin_defx
+  autocmd!
+  " Define defx window mappings
+  autocmd FileType defx call <SID>defx_mappings()
+  " Delete defx if it's the only buffer left in the window
+  autocmd WinEnter * if &filetype == 'defx' && winnr('$') == 1 | bdel | endif
+  " Move focus to the next window if current buffer is defx
+  autocmd WinLeave * if &filetype == 'defx' | wincmd w | endif
+augroup END
+
+" autocmd FileType defx call s:defx_mappings()
 function! s:defx_mappings() abort
-  setlocal conceallevel=2
-  setlocal concealcursor=inc
+  " setlocal conceallevel=2
+  " setlocal concealcursor=inc
   nnoremap <silent><buffer><expr> o  <SID>defx_toggle_tree()                    " 打开或者关闭文件夹，文件
   nnoremap <silent><buffer><expr> O  defx#do_action('open_tree_recursive')
   nnoremap <silent><buffer><expr> s  defx#do_action('open', 'botright vsplit')
@@ -690,6 +708,7 @@ function! s:defx_mappings() abort
   nnoremap <silent><buffer><expr> x  defx#do_action('move')
   nnoremap <silent><buffer><expr> p  defx#do_action('paste')
   nnoremap <silent><buffer><expr> r  defx#do_action('rename')
+  nnoremap <silent><buffer><expr> P  defx#do_action('preview')
   nnoremap <silent><buffer><expr> H  defx#do_action('toggle_ignored_files')     " 显示隐藏文件
   nnoremap <silent><buffer><expr> R  defx#do_action('redraw')
   nnoremap <silent><buffer><expr> N  defx#do_action('new_multiple_files')
@@ -700,8 +719,8 @@ function! s:defx_mappings() abort
   " nnoremap <silent><buffer><expr> X  defx#do_action('execute_system')
   " nnoremap <silent><buffer><expr> *  defx#do_action('toggle_select_all')
   nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
-  nnoremap <silent><buffer><expr> j  line('.') == line('$') ? 'gg' : 'j'
-  nnoremap <silent><buffer><expr> k  line('.') == 1 ? 'G' : 'k'
+  " nnoremap <silent><buffer><expr> j  line('.') == line('$') ? 'gg' : 'j'
+  " nnoremap <silent><buffer><expr> k  line('.') == 1 ? 'G' : 'k'
   nnoremap <silent><buffer><expr> <C-g>  defx#do_action('print')
 endfunction
 
@@ -712,6 +731,7 @@ function! s:defx_toggle_tree() abort
     endif
     return defx#do_action('multi', ['drop'])
 endfunction
+endif
 " }}}
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

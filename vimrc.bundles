@@ -11,7 +11,7 @@ call plug#begin('~/.vim/bundle')
 
 " Appearance {{{
 " True Color
-Plug 'sainnhe/vim-color-forest-night'
+Plug 'sainnhe/forest-night'
 Plug 'sainnhe/gruvbox-material'
 Plug 'sainnhe/edge'
 Plug 'lifepillar/vim-solarized8'
@@ -37,25 +37,233 @@ Plug 'lifepillar/vim-solarized8'
 
 " display the indention levels with thin vertical lines
 Plug 'Yggdroot/indentLine'
-  let g:indentLine_fileTypeExclude = ['defx']
+  let g:indentLine_fileType = ['ruby', 'eruby', 'elixir', 'eelixir', 'javascript']
+
 
 " lean & mean status/tabline for vim that's light as air
 " Plug 'vim-airline/vim-airline-themes'
-Plug 'bling/vim-airline'
-  let g:airline_theme = 'forest_night'
-  let g:airline_powerline_fonts=1
-  let g:airline#extensions#branch#enabled = 1
-  let g:airline#extensions#branch#empty_message = ''
-  " disable summary of changed hunks under source control.
-  let g:airline#extensions#hunks#enabled = 0
+" Plug 'bling/vim-airline'
+"   let g:airline_theme = 'forest_night'
+"   let g:airline_powerline_fonts=1
+"   let g:airline#extensions#branch#enabled = 1
+"   let g:airline#extensions#branch#empty_message = ''
+"   " disable summary of changed hunks under source control.
+"   let g:airline#extensions#hunks#enabled = 0
+"
+"   " control which sections get truncated and at what width. >
+"   let g:airline#extensions#default#section_truncate_width = {
+"       \   'b': 79,
+"       \   'x': 60,
+"       \   'y': 88,
+"       \   'z': 45,
+"       \ }
 
-  " control which sections get truncated and at what width. >
-  let g:airline#extensions#default#section_truncate_width = {
-      \   'b': 79,
-      \   'x': 60,
-      \   'y': 88,
-      \   'z': 45,
+"lightline.vim plugins group
+Plug 'ryanoasis/vim-devicons'
+Plug 'sainnhe/artify.vim'
+  let g:lightlineArtify = 1
+Plug 'itchyny/lightline.vim'
+Plug 'itchyny/vim-gitbranch'
+Plug 'macthecadillac/lightline-gitdiff'
+"{{{lightline.vim
+"{{{lightline.vim-usage
+" :h 'statusline'
+" :h g:lightline.component
+"}}}
+"{{{functions
+function! CocCurrentFunction()"{{{
+  return get(b:, 'coc_current_function', '')
+endfunction"}}}
+function! Devicons_Filetype()"{{{
+  " return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction"}}}
+function! Devicons_Fileformat()"{{{
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction"}}}
+function! Tab_num(n) abort"{{{
+  return a:n." \ue0bb"
+endfunction"}}}
+function! Gitbranch() abort"{{{
+  if gitbranch#name() !=# ''
+    return gitbranch#name()." \ue725"
+  else
+    return "\ue61b"
+  endif
+endfunction"}}}
+function! Artify_active_tab_num(n) abort"{{{
+  return Artify(a:n, 'bold')." \ue0bb"
+endfunction"}}}
+function! Artify_inactive_tab_num(n) abort"{{{
+  return Artify(a:n, 'double_struck')." \ue0bb"
+endfunction"}}}
+function! Artify_lightline_tab_filename(s) abort"{{{
+  if g:lightlineArtify ==# 2
+    return Artify(lightline#tab#filename(a:s), 'monospace')
+  else
+    return lightline#tab#filename(a:s)
+  endif
+endfunction"}}}
+function! Artify_lightline_mode() abort"{{{
+  if g:lightlineArtify ==# 2
+    return Artify(lightline#mode(), 'monospace')
+  else
+    return lightline#mode()
+  endif
+endfunction"}}}
+function! Artify_line_percent() abort"{{{
+  return Artify(string((100*line('.'))/line('$')), 'bold')
+endfunction"}}}
+function! Artify_line_num() abort"{{{
+  return Artify(string(line('.')), 'bold')
+endfunction"}}}
+function! Artify_col_num() abort"{{{
+  return Artify(string(getcurpos()[2]), 'bold')
+endfunction"}}}
+function! Artify_gitbranch() abort"{{{
+  if gitbranch#name() !=# ''
+    if g:lightlineArtify ==# 2
+      return Artify(gitbranch#name(), 'monospace')." \ue725"
+    else
+      return gitbranch#name()." \ue725"
+    endif
+  else
+    return "\ue61b"
+  endif
+endfunction"}}}
+function! LightlineFilename()"{{{
+  let root = fnamemodify(get(b:, 'git_dir'), ':h')
+  let path = expand('%:p')
+  if path[:len(root)-1] ==# root
+    return path[len(root)+1:]
+  endif
+  return expand('%')
+endfunction"}}}
+"}}}
+set laststatus=2  " Basic
+set noshowmode  " Disable show mode info
+augroup lightlineCustom
+  autocmd!
+  autocmd BufWritePost * call lightline_gitdiff#query_git() | call lightline#update()
+augroup END
+let g:lightline = {}
+let g:lightline.colorscheme = 'forest_night'
+let g:lightline.separator = { 'left': "\ue0b8", 'right': "\ue0be" }
+let g:lightline.subseparator = { 'left': "\ue0b9", 'right': "\ue0b9" }
+let g:lightline.tabline_separator = { 'left': "\ue0bc", 'right': "\ue0ba" }
+let g:lightline.tabline_subseparator = { 'left': "\ue0bb", 'right': "\ue0bb" }
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf529"
+let g:lightline#ale#indicator_errors = "\uf00d"
+let g:lightline#ale#indicator_ok = "\uf00c"
+let g:lightline_gitdiff#indicator_added = '+'
+let g:lightline_gitdiff#indicator_deleted = '-'
+let g:lightline_gitdiff#indicator_modified = '*'
+let g:lightline_gitdiff#min_winwidth = '70'
+if g:lightlineArtify == 0
+  let g:lightline.active = {
+        \ 'left': [ [ 'mode', 'paste' ],
+        \           [ 'artify_gitbranch', 'readonly', 'filename', 'modified', 'devicons_filetype' ] ],
+        \ 'right': [ [ 'lineinfo' ], [ 'fileformat' ],
+        \            [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'pomodoro' ],
+        \           [ 'coc_status' ] ]
+        \ }
+  let g:lightline.inactive = {
+        \ 'left': [ [ 'filename' , 'modified', 'devicons_filetype' ]],
+        \ 'right': [ [ 'fileformat', 'lineinfo' ] ]
+        \ }
+  let g:lightline.tabline = {
+        \ 'left': [ [ 'vim_logo', 'tabs' ] ],
+        \ 'right': [ [ 'gitbranch' ],
+        \ [ 'gitstatus' ] ]
+        \ }
+  let g:lightline.tab = {
+        \ 'active': [ 'tabnum', 'filename', 'modified' ],
+        \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
+else
+  let g:lightline.active = {
+        \ 'left': [ [ 'artify_mode', 'paste' ],
+        \           [ 'artify_gitbranch', 'readonly', 'filename', 'modified', 'devicons_filetype' ] ],
+        \ 'right': [ [ 'artify_lineinfo' ], [ 'fileformat' ],
+        \            [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'pomodoro' ],
+        \           [ 'coc_status' ] ]
+        \ }
+  let g:lightline.inactive = {
+        \ 'left': [ [ 'filename' , 'modified', 'devicons_filetype' ]],
+        \ 'right': [ [ 'fileformat', 'artify_lineinfo' ] ]
+        \ }
+  let g:lightline.tabline = {
+        \ 'left': [ [ 'vim_logo', 'tabs' ] ],
+        \ 'right': [ [ 'artify_gitbranch' ],
+        \ [ 'gitstatus' ] ]
+        \ }
+  let g:lightline.tab = {
+        \ 'active': [ 'artify_activetabnum', 'artify_filename', 'modified' ],
+        \ 'inactive': [ 'artify_inactivetabnum', 'filename', 'modified' ] }
+endif
+let g:lightline.tab_component = {
       \ }
+let g:lightline.tab_component_function = {
+      \ 'artify_activetabnum': 'Artify_active_tab_num',
+      \ 'artify_inactivetabnum': 'Artify_inactive_tab_num',
+      \ 'artify_filename': 'Artify_lightline_tab_filename',
+      \ 'filename': 'lightline#tab#filename',
+      \ 'modified': 'lightline#tab#modified',
+      \ 'readonly': 'lightline#tab#readonly',
+      \ 'tabnum': 'Tab_num'
+      \ }
+let g:lightline.component = {
+      \ 'artify_gitbranch' : '%{Artify_gitbranch()}',
+      \ 'artify_mode': '%{Artify_lightline_mode()}',
+      \ 'artify_lineinfo': "%2{Artify_line_percent()}\uf295 %3{Artify_line_num()}:%-2{Artify_col_num()}",
+      \ 'gitstatus' : '%{lightline_gitdiff#get_status()}',
+      \ 'bufinfo': '%{bufname("%")}:%{bufnr("%")}',
+      \ 'vim_logo': "\ue7c5",
+      \ 'mode': '%{lightline#mode()}',
+      \ 'absolutepath': '%F',
+      \ 'relativepath': '%f',
+      \ 'filename': '%t',
+      \ 'filesize': "%{HumanSize(line2byte('$') + len(getline('$')))}",
+      \ 'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
+      \ 'fileformat': '%{&fenc!=#""?&fenc:&enc}[%{&ff}]',
+      \ 'filetype': '%{&ft!=#""?&ft:"no ft"}',
+      \ 'modified': '%M',
+      \ 'bufnum': '%n',
+      \ 'paste': '%{&paste?"PASTE":""}',
+      \ 'readonly': '%R',
+      \ 'charvalue': '%b',
+      \ 'charvaluehex': '%B',
+      \ 'percent': '%2p%%',
+      \ 'percentwin': '%P',
+      \ 'spell': '%{&spell?&spelllang:""}',
+      \ 'lineinfo': '%2p%% %3l:%-2v',
+      \ 'line': '%l',
+      \ 'column': '%c',
+      \ 'close': '%999X X ',
+      \ 'winnr': '%{winnr()}'
+      \ }
+let g:lightline.component_function = {
+      \ 'gitbranch': 'Gitbranch',
+      \ 'filename': 'LightlineFilename',
+      \ 'devicons_filetype': 'Devicons_Filetype',
+      \ 'devicons_fileformat': 'Devicons_Fileformat',
+      \ 'coc_status': 'coc#status',
+      \ 'coc_currentfunction': 'CocCurrentFunction'
+      \ }
+let g:lightline.component_expand = {
+      \ 'linter_checking': 'lightline#ale#checking',
+      \ 'linter_warnings': 'lightline#ale#warnings',
+      \ 'linter_errors': 'lightline#ale#errors',
+      \ 'linter_ok': 'lightline#ale#ok'
+      \ }
+let g:lightline.component_type = {
+      \ 'linter_warnings': 'warning',
+      \ 'linter_errors': 'error'
+      \ }
+let g:lightline.component_visible_condition = {
+      \ 'gitstatus': 'lightline_gitdiff#get_status() !=# ""'
+      \ }
+"}}}
 " }}}
 
 " Tim Pope's Plugins {{{
@@ -71,6 +279,10 @@ Plug 'tpope/vim-sleuth'
 " enable repeating supported plugin maps with "."
 Plug 'tpope/vim-repeat'
 
+" easily search for, substitute, and abbreviate multiple variants of a word
+" switch case using crc, crs, crm, etc.
+Plug 'tpope/vim-abolish'
+
 " sugar for the UNIX shell commands
 " Plug 'tpope/vim-eunuch'
 
@@ -78,7 +290,15 @@ Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-projectionist'
 
 " Modern database interface for Vim, support mysql, pgsql, mongodb, redis, sqlite, and more. Use `:h dadbod` to show details.
-" Plug 'tpope/vim-dadbod'
+Plug 'tpope/vim-dadbod'
+  " run queries under cursor by pressing <leader>db + text object
+  xnoremap <expr> <Plug>(DBExe)     db#op_exec()
+  nnoremap <expr> <Plug>(DBExe)     db#op_exec()
+  nnoremap <expr> <Plug>(DBExeLine) db#op_exec() . '_'
+  xmap <leader>db  <Plug>(DBExe)
+  nmap <leader>db  <Plug>(DBExe)
+  omap <leader>db  <Plug>(DBExe)
+  nmap <leader>dbb <Plug>(DBExeLine)
 " }}}
 
 " Junegunn Choi's Plugins {{{
@@ -95,9 +315,16 @@ Plug 'junegunn/fzf.vim'
   nnoremap <silent><leader>h :History<CR>
   nnoremap <silent><leader>e :History:<CR>
   nnoremap <silent><leader>m :Marks<CR>
-  nnoremap <silent><Leader>ot :BTags<CR>
+
+  " only filter the first column in Tags results
+  autocmd VimEnter *
+  \ command! -bang -nargs=* Tags call fzf#vim#tags(<q-args>, {'options': '-n1'}, <bang>0)
+  nnoremap <silent><Leader>oo :Tags<CR>
+  " filter btags by f/m/v/p to be very usful!
+  nnoremap <silent><Leader>ot :call fzf#vim#buffer_tags('', { 'options': ['--nth', '..-2,-1'] })<CR>
+
   nnoremap <silent><Leader>gl :GFiles?<CR>
-  nnoremap <silent><Leader>rg :RG <C-R><C-W><CR>
+  nnoremap <silent><Leader>rg :Rg <C-R><C-W><CR>
   " nnoremap <silent><Leader>ag :Ag <C-R><C-W><CR>
 
   " make fzf completely delegate its search responsibliity to ripgrep process
@@ -107,9 +334,9 @@ Plug 'junegunn/fzf.vim'
     let initial_command = printf(command_fmt, shellescape(a:query))
     let reload_command = printf(command_fmt, '{q}')
     let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+    call fzf#vim#grep(initial_command, 1, { 'options': '--color hl:123,hl+:222' }, a:fullscreen)
   endfunction
-  command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+  command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
 
   " PRO tips: https://github.com/junegunn/fzf.vim/issues/347
   function! s:goto_def(lines) abort
@@ -203,7 +430,7 @@ Plug 'yianwillis/vimcdoc'
 
 " Delete buffers and close files in Vim without closing your windows or messing up your layout
 Plug 'moll/vim-bbye'
-  nnoremap <leader>d :bdelete<CR>
+  nnoremap <leader>dd :Bdelete<CR>
 
 " extended % matching for HTML, LaTeX, and many other languages
 " Plug 'vim-scripts/matchit.zip'
@@ -279,7 +506,6 @@ Plug 'fszymanski/fzf-quickfix', {'on': 'Quickfix'}
 
 " Use neovim terminal in the floating window
 Plug 'voldikss/vim-floaterm'
-  tnoremap <C-g> <C-\><C-n>
   let g:floaterm_width = 0.8
   let g:floaterm_position = 'center'
   let g:floaterm_keymap_toggle = ',e'
@@ -306,7 +532,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " Programming {{{
 " View and search LSP symbols, tags in Vim
 Plug 'liuchengxu/vista.vim'
-  nnoremap <silent><leader>oo  :Vista!!<CR>
+  nnoremap <silent><leader>ov  :Vista!!<CR>
 
 " A plugin that takes care of the much needed management of tags files in Vim. It will (re)generate tag files as you work
 Plug 'ludovicchabant/vim-gutentags'
@@ -318,17 +544,19 @@ Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'zhuochun/vim-dicts'
 " Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
-Plug 'Shougo/neosnippet.vim'
-  " Enable snipMate compatibility feature
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  " set customize snippets
-  let g:neosnippet#snippets_directory='~/dotfiles/vim/snippets'
-  " Remove snippet markers after save
-  autocmd! BufWrite * NeoSnippetClearMarkers
-  " Plugin key-mappings
-  imap <C-j>     <Plug>(neosnippet_expand_or_jump)
-  smap <C-j>     <Plug>(neosnippet_expand_or_jump)
-  xmap <C-j>     <Plug>(neosnippet_expand_target)
+
+" Because active development on neosnippet.vim has stopped, so switch to use coc-snippets which support ultisnips and snipMate both!
+" Plug 'Shougo/neosnippet.vim'
+"   " Enable snipMate compatibility feature
+"   let g:neosnippet#enable_snipmate_compatibility = 1
+"   " set customize snippets
+"   let g:neosnippet#snippets_directory='~/dotfiles/vim/snippets'
+"   " Remove snippet markers after save
+"   autocmd! BufWrite * NeoSnippetClearMarkers
+"   " Plugin key-mappings
+"   imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+"   smap <C-j>     <Plug>(neosnippet_expand_or_jump)
+"   xmap <C-j>     <Plug>(neosnippet_expand_target)
 
 " A Vim wrapper for running tests on different granularities, supporting many languages test framework, like ruby, elixir, go
 Plug 'janko-m/vim-test', { 'for': ['ruby', 'elixir', 'go'] }
@@ -347,6 +575,31 @@ Plug 'rizzatti/dash.vim'
 
 " Copy syntax-highlighted code from vim to the OS X clipboard as RTF text
 Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF' }
+
+Plug 'dense-analysis/ale'
+  let g:ALE_MODE = 1  " 0则只在保存文件时检查，1则只在normal模式下检查，2则异步检查
+  let g:ale_linters = {
+      \       'css': ['stylelint'],
+      \       'elixir': ['credo'],
+      \       'go': ['gofmt', 'gopls'],
+      \       'html': ['tidy'],
+      \       'json': [],
+      \       'markdown': [''],
+      \       'python': ['pylint', 'flake8', 'mypy', 'pydocstyle'],
+      \       'ruby': ['rubocop'],
+      \       'sh': ['shellcheck'],
+      \       'text': ['languagetool'],
+      \       'vim': ['vint'],
+      \}
+  "自定义error和warning图标
+  let g:ale_sign_error = "\uf65b"
+  let g:ale_sign_warning = "\uf421"
+  "显示Linter名称,出错或警告等相关信息
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  " 光标移动到错误的地方时立即显示错误
+  let g:ale_echo_delay = 0
 " }}}
 
 if has('nvim')
@@ -384,6 +637,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   " Always show the signcolumn, otherwise it would shift the text each time diagnostics appear/become resolved.
   set signcolumn=yes
+
+  " coc-snippets: Use <C-j> for both expand and jump (make expand higher priority.)
+  imap <C-j> <Plug>(coc-snippets-expand-jump)
 
   " Use tab for trigger completion with characters ahead and navigate.
   " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -646,6 +902,7 @@ Plug 'slashmili/alchemist.vim', { 'for': ['ex', 'exs', 'eex'] }
 Plug 'fatih/vim-go', { 'for': ['go'] }
   " Run goimports along gofmt on each save
   let g:go_fmt_command = "goimports"
+  let g:go_rename_command = 'gopls'
   " Automatically get signature/type info for object under cursor
   let g:go_auto_type_info = 1
   " let g:go_auto_sameids = 1
@@ -711,6 +968,8 @@ Plug 'junegunn/gv.vim'
   " only list commits that affected the current file
   nnoremap <leader>gv :GV!<CR>
 
+" GitHub extension for fugitive.vim
+Plug 'tpope/vim-rhubarb'
 " Dark powered premier plugin for Git!!
 Plug 'tpope/vim-fugitive'
   nnoremap <Leader>gg :Gblame<CR>

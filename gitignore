@@ -1,5 +1,6 @@
 .DS_Store
 *.sw[nop]
+.idea
 .bundle
 .byebug_history
 .env
@@ -9,9 +10,9 @@ log/*.log
 rerun.txt
 tags
 gems.tags
-Procfile
 !tags/
 tmp/**/*
 !tmp/cache/.keep
 *.pyc
+*.iml
 /vendor/bundle

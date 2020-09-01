@@ -1,6 +1,8 @@
 {
   "codeLens.enable": true,
   "suggest.enablePreview": true,
+  "suggest.maxPreviewWidth": 50,
+  "suggest.detailMaxLength": 50,
   "languageserver": {
     "golang": {
       "command": "gopls",
